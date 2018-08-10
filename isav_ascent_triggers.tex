@@ -38,12 +38,12 @@
 
 
 \begin{document}
-\title{SIG Proceedings Paper in LaTeX Format}
-\titlenote{Produces the permission block, and
-  copyright information}
-\subtitle{Extended Abstract}
-\subtitlenote{The full version of the author's guide is available as
-  \texttt{acmart.pdf} document}
+\title{A Flexible System For In Situ Triggers}
+%\titlenote{Produces the permission block, and
+  %copyright information}
+%\subtitle{Extended Abstract}
+%\subtitlenote{The full version of the author's guide is available as
+  %\texttt{acmart.pdf} document}
 
 
 \author{Ben Trovato}
@@ -123,9 +123,19 @@
 
 
 \begin{abstract}
-This paper provides a sample of a \LaTeX\ document which conforms,
-somewhat loosely, to the formatting guidelines for
-ACM SIG Proceedings.\footnote{This is an abstract footnote}
+
+Triggers are an important mechanism for adapting I/O and visualization actions as a simulation runs.
+%
+We describe the system for triggers in the ASCENT in situ infrastructure.
+%
+This system splits a trigger into two components, when to perform an action and what actions to perform.
+%
+The decision for when to perform an action can be based on different types of factors, such as mesh topology, scalar fields, or performance data.
+%
+The actions to perform are also varied, ranging from the traditional action of saving simulation state to disk to performing arbitrary visualizations and analyses.
+%
+We also include details on the implementation and a short example demonstrating how it can be used.
+
 \end{abstract}
 
 %
