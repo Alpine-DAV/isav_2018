@@ -1,6 +1,7 @@
 \section{Introduction}
 
-Computational simulations produce data, and an important part of 
+Computational simulations produce large amounts of data, 
+and an important part of 
 the workflow for these simulations is managing the resulting data.
 %
 Common actions available to the simulation for processing this data
@@ -22,7 +23,7 @@ fixed policy before the simulation runs.
 %
 Examples of such fixed policies are to perform VAS every N cycles, to perform
 VAS every time a simulation has advanced T seconds of simulation time,
-or to perform VAS every M minutes of time running on a computer.
+or to perform VAS every M minutes of time the simulation runs on a computer.
 %
 With these workflows, much of the simulation's data is not inspected for
 VAS purposes.
@@ -33,11 +34,12 @@ For example, if the policy is to save to disk every 100 cycles, then
 Temporal subsampling is often acceptable, as simulation data from one
 cycle to the next are often very similar.
 %
-However, if the percentage of the data inspected gets too low,
+However, if the proportion of the data inspected gets too low,
 then temporal subsamplings can be highly problematic, as key phenomena
 may occur during the cycles not inspected.
 %
-In such cases, the effects of key phenomena may lead scientists to realize
+In such cases, the effects of key phenomena may leave effects in subsequent
+time slices that lead scientists to realize
 that important information was lost during due to temporal subsampling,
 in which case the simulation could be re-run, or, worse, the
 phenomena may go undiscovered altogether.
@@ -57,12 +59,13 @@ provided it ``triggers'' VAS actions at the right time, and appropriate
 VAS actions are taken.
 %
 This approach has been gaining momentum with many recent
-results (see Related Work section), and is referred to as ``in situ triggers''
+results (see Related Work section), and is referred to as ``in situ triggers,''
 since the inspection routines are applied  in situ to the simulation data
 and the routines can ``trigger'' VAS actions.
 
-With this work, we describe the mechnanism for in situ triggers for the 
-ASCENT in situ library.
+With this work, we describe the 
+ASCENT in situ library's
+mechnanism for in situ triggers.
 %
 Our focus with this work was providing a flexible system that would enable
 a variety of trigger approaches.
@@ -73,8 +76,8 @@ and
 (2) the specific VAS actions to apply.
 %
 We feel this approach will encourage re-use, as ASCENT developers can
-focus on developing many inspection routines and VAS actions, and then
-combine them as appropriate.
+focus on developing many inspection routines and/or VAS actions, and then
+pair them as appropriate.
 %
 In the remainder of this paper, we describe ASCENT's trigger system, as
 well as the inspection routines and VAS actions we have developed to date.
