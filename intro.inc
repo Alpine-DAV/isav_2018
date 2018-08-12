@@ -38,9 +38,9 @@ However, if the proportion of the data inspected gets too low,
 then temporal subsamplings can be highly problematic, as key phenomena
 may occur during the cycles not inspected.
 %
-In such cases, the effects of key phenomena may leave effects in subsequent
+In such cases, the key phenomena may leave effects in subsequent
 time slices that lead scientists to realize
-that important information was lost during due to temporal subsampling,
+that important information was lost because of the temporal subsampling,
 in which case the simulation could be re-run.
 %
 Or, worse, the
@@ -68,7 +68,7 @@ With this work, we describe the
 ASCENT in situ library's
 mechnanism for in situ triggers.
 %
-Our focus with this work was providing a flexible system that would enable
+Our focus with this work was to provide a flexible system that would enable
 a variety of trigger approaches.
 %
 Our system defines triggers as two orthogonal pieces:
@@ -77,7 +77,7 @@ and
 (2) the specific VAS actions to apply.
 %
 We feel this approach will encourage re-use, as ASCENT developers can
-focus on developing many inspection routines and/or VAS actions, and then
+focus on developing inspection routines and/or VAS actions, and then
 pair them as appropriate.
 %
 In the remainder of this paper, we describe ASCENT's trigger system, as
