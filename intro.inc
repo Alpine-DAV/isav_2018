@@ -1,5 +1,6 @@
 \section{Introduction}
 
+\if 0
 ALPINE is a multi-institution effort funded by the U.S. Department of Energy's
 Exascale Computing Project (ECP)~\cite{messina2017exascale}.
 %
@@ -69,3 +70,4 @@ describes the main components of ALPINE's infrastructure, and Section~\ref{sec:r
 
 %staying tru to the requirements of strawman...
 
+\fi
