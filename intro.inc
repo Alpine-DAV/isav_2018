@@ -2,7 +2,7 @@
 
 Computational simulations produce large amounts of data, 
 and an important part of 
-the workflow for these simulations is managing the resulting data.
+the workflow for these simulations is managing this  data.
 %
 Common actions available to the simulation for processing this data
 are to save the data to disk,
@@ -19,7 +19,7 @@ A simulation's workflow for visualization, analysis, and/or storage (VAS) can be
 either adaptive or non-adaptive.
 %
 With a non-adaptive workflow, the VAS actions performed happen based on some
-fixed policy before the simulation runs.
+fixed policy that is established before the simulation begins.
 %
 Examples of such fixed policies are to perform VAS every N cycles, to perform
 VAS every time a simulation has advanced T seconds of simulation time,
@@ -32,7 +32,7 @@ For example, if the policy is to save to disk every 100 cycles, then
 99\% of data is not subject to VAS, i.e., a temporal subsampling.
 %
 Temporal subsampling is often acceptable, as simulation data from one
-cycle to the next are often very similar.
+cycle to the next is often very similar.
 %
 However, if the proportion of the data inspected gets too low,
 then temporal subsamplings can be highly problematic, as key phenomena
@@ -41,7 +41,9 @@ may occur during the cycles not inspected.
 In such cases, the effects of key phenomena may leave effects in subsequent
 time slices that lead scientists to realize
 that important information was lost during due to temporal subsampling,
-in which case the simulation could be re-run, or, worse, the
+in which case the simulation could be re-run.
+%
+Or, worse, the
 phenomena may go undiscovered altogether.
 
 Adaptive workflows work differently.
@@ -52,16 +54,15 @@ regularly inspected (often every cycle).
 The job of these inspections is to determine if interesting phenomena
 has occurred.
 %
-If so, then the inspection process should ``trigger'' VAS actions.
+If so, then the inspection process should prompt VAS actions to occur.
 %
 This approach has the potential to prevent the loss of key phenomena,
-provided it ``triggers'' VAS actions at the right time, and appropriate
-VAS actions are taken.
+provided the right VAS actions are taken at the right time.
 %
-This approach has been gaining momentum with many recent
-results (see Related Work section), and is referred to as ``in situ triggers,''
+The approach has been gaining momentum with many recent
+results (see the Related Work section), and is termed ``in situ triggers,''
 since the inspection routines are applied  in situ to the simulation data
-and the routines can ``trigger'' VAS actions.
+and the routines can ``trigger'' VAS actions to take place.
 
 With this work, we describe the 
 ASCENT in situ library's
@@ -71,7 +72,7 @@ Our focus with this work was providing a flexible system that would enable
 a variety of trigger approaches.
 %
 Our system defines triggers as two orthogonal pieces:
-(1) an inspection system that determines when VAS should occur
+(1) an inspection routine that determines when VAS should occur
 and 
 (2) the specific VAS actions to apply.
 %
