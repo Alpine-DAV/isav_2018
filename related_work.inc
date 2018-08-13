@@ -1,4 +1,4 @@
-\subsection{Related Work}
+\section{Related Work}
 Interesting related work.
 
 
