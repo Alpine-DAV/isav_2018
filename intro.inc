@@ -87,7 +87,7 @@ The inspection routines are based on simulation field data, simulation mesh
 topology, and performance data, and
 our VAS actions involve all of the capabilities within ASCENT.
 
-
+\fix{It is entirely supported for triggers to change the actions that are executed. Should this be considered?}
 \if 0
 ALPINE is a multi-institution effort funded by the U.S. Department of Energy's
 Exascale Computing Project (ECP)~\cite{messina2017exascale}.

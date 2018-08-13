@@ -1,2 +1,2 @@
-\subsection{Trigger Examples}
+\section{Trigger Examples}
 Examples of triggers
