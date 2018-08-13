@@ -14,7 +14,7 @@ This work was then extended by Salloum et al.~\cite{Salloum_isav} who provided a
 %
 Similarly, work by Zhao et al.~\cite{zhao_jc} and Ullrich et al.~\cite{ullrich_gmd} created domain-specific triggers for tropical cyclone trackers within climate simulations. 
 
-Zhou and Chiang \cite{zhou_cgf} and Myers et al.~\cite{myers} utilized statistical methods to determine time steps of global and local significance, respectively. 
+Zhou and Chiang \cite{zhou_cgf} and Myers et al.~\cite{myers} utilized statistical methods to determine time steps of global and local significance, respectively, though the former work is not performed in situ.  
 %
 Banesh et al.~\cite{Banesh11} expanded on this work by utilizing change detection techniques for both time-based and specific parameter-based eddy identification in simulated ocean data. 
 %
