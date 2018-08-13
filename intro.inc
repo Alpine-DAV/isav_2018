@@ -1,11 +1,11 @@
 \section{Introduction}
 
 Computational simulations produce large amounts of data, 
-and an important part of 
-the workflow for these simulations is managing this  data.
+and manging this data is an important part of 
+these simulations' workflow.
 %
-Common actions available to the simulation for processing this data
-are to save the data to disk,
+Common actions available to simulations for processing their data
+are to store the data to disk,
 to apply in situ visualization and analysis techniques,
 or a combination of the two (i.e., use in situ techniques to transform and/or
 subset data and then store the result to disk).
@@ -36,10 +36,10 @@ cycle to the next is often very similar.
 %
 However, if the proportion of the data inspected gets too low,
 then temporal subsamplings can be highly problematic, as key phenomena
-may occur during the cycles not inspected.
+may occur during the uninspected cycles.
 %
-In such cases, the key phenomena may leave effects in subsequent
-time slices that lead scientists to realize
+In such cases, the phenomena may leave effects in subsequent
+cycles' data that lead scientists to realize
 that important information was lost because of the temporal subsampling,
 in which case the simulation could be re-run.
 %
@@ -68,10 +68,10 @@ With this work, we describe the
 ASCENT in situ library's
 mechnanism for in situ triggers.
 %
-Our focus with this work was to provide a flexible system that would enable
+Our focus with this work is to provide a flexible system that enables
 a variety of trigger approaches.
 %
-Our system defines triggers as two orthogonal pieces:
+Our system defines a trigger as two orthogonal pieces:
 (1) an inspection routine that determines when VAS should occur
 and 
 (2) the specific VAS actions to apply.
