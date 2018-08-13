@@ -1,5 +1,8 @@
 \section{Trigger Examples}
 \fix{Do these examples have to be real or just potential use cases? I feel like compelling use cases could be more impactful.}
+This section consists of examples and use cases that people MUST have and that are extremely useful. 
+%
+People can't live without triggers.
 
 \subsection{Field Trigger Example}
 
