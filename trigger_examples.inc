@@ -1,5 +1,21 @@
 \section{Trigger Examples}
-Examples of triggers
+\fix{Do these examples have to be real or just potential use cases? I feel like compelling use cases could be more impactful.}
+
+\subsection{Field Trigger Example}
+
+Potential examples: Max value greater than x. Entropy greater than Y. 
+
+Actions: save mesh to disk or same some isosurface to disk.
+
+\subsection{Stateful Field Trigger Example}
+
+Entropy: X amount greater than the last invocation?
+
+Same potential actions.
+
+
+\subsection{Mesh Trigger Example}
+Some example of total domain volume using Lulush?
 
 \subsection{Performance Trigger Example}
 Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
