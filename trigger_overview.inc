@@ -73,6 +73,8 @@ Trigger actions are defined by the same interface and thus all the same capabili
 %
 Some examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
 %
+Additionally, trigger actions can include other triggers that create a set of conditions(contained in multiple triggers) which all must  be satisfied before the final set of actions is performed.
+%
 \fix{Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of the graph, and the data flow network is extended based on the actions provided  by the user. Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating rich set of possibilities for adaptive visualization workflows.}
 %
 
