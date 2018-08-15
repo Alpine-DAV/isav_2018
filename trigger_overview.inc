@@ -1,19 +1,23 @@
 \section{Trigger Infrastructure Overview}
-
-\subsection{Trigger Actions}
-Ascent executes a set of actions described by the user. 
+\fix{HIGHLIGHT Python}
+Our trigger infrastructure is implemented in Ascent~\cite{Larsen:2017:ASI:3144769.3144778}, a fly-weight in situ visualization and analysis infrastructure.
 %
-These actions direct Ascent to create pipelines (i.e., transforming data), extracts (i.e., capture data), and  scenes (i.e., making pictures).
+Ascent's flexibility is derived from a generic data flow network called Flow.
 %
-Trigger actions are defined by the same interface and thus all the same capabilities, including containing other triggers. 
+Filters in Flow have arbitrary inputs and outputs, and each component of Ascent is implemented as a Flow filter.
 %
+The Ascent runtime translates data and actions described in the high level API into a data flow network that Flow executes.
+%
+Using this modular architecture, all of Ascent's components can be connected together.
+%
+The trigger implementation in Ascent is simply another filter in a larger data flow network.
 
 \subsection{Trigger Input}
-A triggers input by default is the entire data set published by the simulation to Ascent.
+A trigger's input by default is the entire data set published by the simulation to Ascent.
 %
 Optionally, triggers can consume the result of a pipeline, a set of data transformations. 
 %
-For example, the input to a trigger could be result of a clip and an iso-surface.
+For example, the input of a trigger could be result of a clip and an iso-surface.
 
 
 \subsection{Trigger Types}
@@ -60,6 +64,18 @@ For example, a trigger might only fire if the information in the current time st
 The state data is completely arbitrary and could range from a single value, a series of values from all previous time steps, or to the entire published data from a previous time step.
 %
 
+\subsection{Trigger Actions}
+Ascent executes a set of actions described by the user. 
+%
+These actions direct Ascent to create pipelines (i.e., transforming data), extracts (i.e., capture data), and  scenes (i.e., making pictures).
+%
+Trigger actions are defined by the same interface and thus all the same capabilities, including containing other triggers. 
+%
+Some examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
+%
+\fix{Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of the graph, and the data flow network is extended based on the actions provided  by the user. Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating rich set of possibilities for adaptive visualization workflows.}
+%
+
 \subsection{Implementation}
 Triggers in Ascent are implemented as a set of classes.
 %
@@ -71,6 +87,8 @@ For example the field trigger class extracts the requested field from the data s
 %
 Stateful triggers inherit from both the trigger base type and the Stateful class, which contains the facilities to save and retrieve state information. 
 Figure~\ref{inheritance} shows the class hierarchy. 
+
+\fix{Triggers can be defined in the host code (domain-specific), directly into ascent (domain-agnostic), or exist as a python script on the file system (both). That said, one of the goals of the trigger infrastructure design is to encourage the sharing and re-use of different triggers. }
 
 \begin{figure}
 \includegraphics[width=4cm]{images/inheritance}

@@ -11,11 +11,26 @@ Potential examples: Max value greater than x. Entropy greater than Y.
 Actions: save mesh to disk or same some isosurface to disk.
 
 \subsection{Stateful Field Trigger Example}
+A simple example of a stateful trigger is a trigger based on entropy.
+%
+The entropy trigger calculates the distributed-memory histogram of a field on the data set, and using the values of the histogram, calculates entropy using the formula:
+\begin{equation}
+H(X) = -\sum\limits_{i=1}^n P(x_{i}) log_{2}P(x_{i})
+\end{equation}
+where $x_{i}$ is the value of histogram bin.
+%
+Entropy is calculated at every cycle and stored into the state of the trigger.
+%
+Whenever entropy differs from the previous cycle by a user defined threshold (e.g., 20.0\%), the trigger fires, executing the trigger actions.
 
-Entropy: X amount greater than the last invocation?
+Figure~\ref{clover_entropy} plots the entropy value of energy over 200 cycles during a run of Cloverleaf3D, a hydrodynamics proxy-application included with Ascent.
+%
+\fix{Initially, entropy values vary significantly and ...}
 
-Same potential actions.
-
+\begin{figure}
+\includegraphics[width=8cm]{images/clover_entropy}
+\caption{\label{clover_entropy} A plot of entropy over cycles of the energy field during a run of the hydrodynamics proxy-application Cloverleaf3D.}
+\end{figure}
 
 \subsection{Mesh Trigger Example}
 Some example of total domain volume using Lulush?
@@ -40,3 +55,6 @@ Using performance visualization techniques can both highlight performance bottle
 \includegraphics[width=8cm]{images/kripke_max_backlog}
 \caption{\label{max_backlog} A volume plot of the each MPI task's maximum backlog of unanswered queries from surrounding tasks from a run consisting of 512 MPI tasks.}
 \end{figure}
+
+\subsection{Dynamic Actions Example}
+Simple example of dynamic actions.

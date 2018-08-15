@@ -87,7 +87,11 @@ The inspection routines are based on simulation field data, simulation mesh
 topology, and performance data, and
 our VAS actions involve all of the capabilities within ASCENT.
 
-\fix{It is entirely supported for triggers to change the actions that are executed. Should this be considered?}
+\fix{Matt: It is entirely supported for triggers to change the actions that are executed. I believe we should put more of an emphasis on this fact since this opens up a rich set of more dynamic workflows. We should only have to alter the last paragraph. I would like to include a simple example of dynamically changing actions.}
+
+\fix{Matt: Our system defines a trigger as two pieces: (1) an inspection routine that determines when VAS should occur and (2) the specific VAS actions to apply. While these two pieces can be orthogonal, VAS can be dependent on the inspection routines where the inspection routines can dynamically alter VAS, and dynamic alteration opens up a rich set of visualization workflows. or something}
+
+
 \if 0
 ALPINE is a multi-institution effort funded by the U.S. Department of Energy's
 Exascale Computing Project (ECP)~\cite{messina2017exascale}.
