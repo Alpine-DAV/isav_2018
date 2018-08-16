@@ -3,6 +3,7 @@
 Our trigger infrastructure is implemented in Ascent~\cite{Larsen:2017:ASI:3144769.3144778}, a fly-weight in situ visualization and analysis infrastructure.
 %
 Ascent's flexibility is derived from a generic data flow network called Flow.
+\fix{Is there a reference for Flow?  Was it described in the ISAV17 paper?  If not, I propose that it go unnamed.}
 %
 Filters in Flow have arbitrary inputs and outputs, and each component of Ascent is implemented as a Flow filter.
 %
@@ -15,7 +16,11 @@ The trigger implementation in Ascent is simply another filter in a larger data f
 \subsection{Trigger Input}
 A trigger's input by default is the entire data set published by the simulation to Ascent.
 %
+\fix{I think the preceding sentence involves more understanding of the Ascent paradigm than the reader may have.  I propose:
+A trigger's input by default is the simulation's entire data set.}
 Optionally, triggers can consume the result of a pipeline, a set of data transformations. 
+\fix{Confused.  I believe it would read better to me if you added an i.e., as
+in ``pipeline, i.e., a set of...''}
 %
 For example, the input of a trigger could be result of a clip and an iso-surface.
 
@@ -46,6 +51,7 @@ Performance triggers are passed custom data published by the simulation.
 \fix{Generally this data is performance information, but the simulation is free to publish any information.}
 %
 Unlike field and mesh triggers, performance trigger actions execute on a reduced version of the mesh, where each simulation domain is represented as a single cell. 
+\fix{This seems very specific.  Would something like looking at wallclock and triggering every ten minutes fit under performance trigger?  ... I note sim code do this already ... here, I am suggesting they do it through Ascent.}
 
 In addition to specific types of triggers, the Ascent trigger infrastructure allows two trigger variations:
 \begin{itemize}

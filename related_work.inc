@@ -18,6 +18,11 @@ triggers that are domain-specific and triggers that are domain-agnostic.
 %
 The organization of this section mirrors this current division in research. 
 
+\fix{Hank also wonders if we should add a sentence like this:}
+Conceptually, each of the works surveyed below could be supported by our
+system, although in some cases new inspection routines or VAS actions would
+need to be added to Ascent.
+
 \subsection{Domain-Agnostic Triggers}
 
 Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant \fix{Hank alternate: which is a barrier for many 

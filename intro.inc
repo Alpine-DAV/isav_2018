@@ -59,7 +59,7 @@ If so, then the inspection process should prompt VAS actions to occur.
 This approach has the potential to prevent the loss of key phenomena,
 provided the right VAS actions are taken at the right time.
 %
-The approach has been gaining momentum with many recent
+This approach has been gaining momentum with many recent
 results (see the Related Work section), and is termed ``in situ triggers,''
 since the inspection routines are applied  in situ to the simulation data
 and the routines can ``trigger'' VAS actions to take place.
