@@ -65,31 +65,42 @@ since the inspection routines are applied  in situ to the simulation data
 and the routines can ``trigger'' VAS actions to take place.
 
 With this work, we describe the 
-ASCENT in situ library's
+Ascent in situ library's
 mechnanism for in situ triggers.
 %
 Our focus with this work is to provide a flexible system that enables
 a variety of trigger approaches.
 %
-Our system defines a trigger as two orthogonal pieces:
-(1) an inspection routine that determines when VAS should occur
-and 
-(2) the specific VAS actions to apply.
+Our system defines a trigger as two pieces: 
+(1) an inspection routine that determines when VAS should occur and 
+(2) the specific VAS actions to apply. 
 %
-We feel this approach will encourage re-use, as ASCENT developers can
+We feel this approach will encourage re-use, as Ascent developers can
 focus on developing inspection routines and/or VAS actions, and then
 pair them as appropriate.
 %
-In the remainder of this paper, we describe ASCENT's trigger system, as
+Further, while the two pieces that make up a trigger can be completely 
+orthogonal, they also can have a dependency.
+%
+Specifically, 
+the VAS actions can also be dependent on the inspection routines,
+i.e.,  the inspection routines dynamically alter VAS operations to perform.
+%
+%Our system defines a trigger as two orthogonal pieces:
+%(1) an inspection routine that determines when VAS should occur
+%and 
+%(2) the specific VAS actions to apply.
+%
+
+In the remainder of this paper, we describe Ascent's trigger system, as
 well as the inspection routines and VAS actions we have developed to date.
 %
 The inspection routines are based on simulation field data, simulation mesh
 topology, and performance data, and
-our VAS actions involve all of the capabilities within ASCENT.
+our VAS actions involve all of the capabilities within Ascent.
 
-\fix{Matt: It is entirely supported for triggers to change the actions that are executed. I believe we should put more of an emphasis on this fact since this opens up a rich set of more dynamic workflows. We should only have to alter the last paragraph. I would like to include a simple example of dynamically changing actions.}
+%\fix{Matt: It is entirely supported for triggers to change the actions that are executed. I believe we should put more of an emphasis on this fact since this opens up a rich set of more dynamic workflows. We should only have to alter the last paragraph. I would like to include a simple example of dynamically changing actions.}
 
-\fix{Matt: Our system defines a trigger as two pieces: (1) an inspection routine that determines when VAS should occur and (2) the specific VAS actions to apply. While these two pieces can be orthogonal, VAS can be dependent on the inspection routines where the inspection routines can dynamically alter VAS, and dynamic alteration opens up a rich set of visualization workflows. or something}
 
 
 \if 0
