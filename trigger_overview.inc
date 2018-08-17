@@ -103,4 +103,30 @@ Figure~\ref{inheritance} shows the class hierarchy.
 \caption{\label{inheritance} An inheritance diagram for the Ascent trigger infrastructure of a custom mesh trigger.}
 \end{figure}
 
+\begin{lstlisting}[caption={The trigger base class API. Each derived trigger type implements the ``get\_data'' method that retreives the appopriate topology, field, or state data from the input.},captionpos=b]
+class Trigger : public ascent::flow::Filter
+{
+public:
+  virtual bool trigger(const conduit::Node& data) = 0;
+  void exectute()
+  {
+  	bool fire = trigger(get_data());
+  	if(fire)
+  	{
+  	  // execute actions
+  	} 
+  }
+protected:
+  virtual const conduit::Node& get_data() = 0;
+};
+\end{lstlisting}
 
+\begin{lstlisting}[caption={The trigger state base class that provides methods for setting and retrieving state inforation stored in conduit nodes. State data is stored in a static key-value store accessible to all trigggers },captionpos=b]
+class TriggerState
+{
+protected:
+ conduit::Node& get_state();
+ void set_state(conduit::Node &state);
+};
+
+\end{lstlisting}
