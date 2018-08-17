@@ -1,35 +1,34 @@
 \section{Related Work}
-\fix{I love this characterization, but I wonder if it distracts ...
-we don't really circle back to this point, and it isn't related to our
-own contribution.}
-Ideally, a trigger is adaptive and generalizable across simulations. 
+%\fix{I love this characterization, but I wonder if it distracts ...
+%we don't really circle back to this point, and it isn't related to our
+%own contribution.}
+%Ideally, a trigger is adaptive and generalizable across simulations. 
 %
-They should require no supervision, should minimize both communication and analysis overheads, and not have to keep previous time steps for analysis. 
+%They should require no supervision, should minimize both communication and analysis overheads, and not have to keep previous time steps for analysis. 
 %
-But in some cases, not all of these trigger characteristics can be met. 
+%But in some cases, not all of these trigger characteristics can be met. 
 %
-The recent research into triggers can be divided into two camps: triggers that are domain-specific and triggers that are domain-agnostic. 
+%The recent research into triggers can be divided into two camps: triggers that are domain-specific and triggers that are domain-agnostic. 
 %
-The organization of this section mirrors this current division in research. 
+%The organization of this section mirrors this current division in research. 
 
-\fix{Hank proposes this intro paragraph:}
 Recent research into triggers can be characterized into two categories: 
 triggers that are domain-specific and triggers that are domain-agnostic. 
 %
 The organization of this section mirrors this current division in research. 
 
-\fix{Hank also wonders if we should add a sentence like this:}
 Conceptually, each of the works surveyed below could be supported by our
 system, although in some cases new inspection routines or VAS actions would
 need to be added to Ascent.
 
 \subsection{Domain-Agnostic Triggers}
 
-Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant \fix{Hank alternate: which is a barrier for many 
-in situ use cases.} and therefore unfit for in situ analysis. 
+Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant which is a barrier for many 
+in situ use cases. 
 %
-Researchers \fix{Why include  the word ``researchers''?  Why does this one reference necessitate different handling in terms of how the reference is referred to??} Malakar et al.~\cite{malakar} take into account the overhead of in situ analysis and present a mathematical formulation for choosing the optimal output frequency given the system's constraints and test their analysis on molecular dynamics applications.  \fix{why is this reference grouped with the other one?  What do they have in common?  (I don't see it.)}
-
+Malakar et al.~\cite{malakar} take into account the computational strain of in situ analysis and present a mathematical formula for choosing the optimal output frequency given the system's constraints.  
+\fix{Hank:why is this reference grouped with the other one?  What do they have in common?  (I don't see it.)}
+\fix{Nicole: It plays off the computational intensity shown in Ling's work and that consideration needs to be taken when applying in situ algorithms. }
 Zhou and Chiang \cite{zhou_cgf} and Myers et al.~\cite{myers} utilized statistical methods to determine time steps of global and local significance, respectively, though the former work is not performed in situ.  
 %
 Banesh et al.~\cite{Banesh11} expanded on this work by utilizing change detection techniques for both time-based and specific parameter-based eddy identification in simulated ocean data. 
