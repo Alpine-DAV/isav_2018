@@ -96,7 +96,7 @@ In the remainder of this paper, we describe Ascent's trigger system, as
 well as the inspection routines and VAS actions we have developed to date.
 %
 The inspection routines are based on simulation field data, simulation mesh
-topology, and performance data, and
+topology, and simulation state data, and
 our VAS actions involve all of the capabilities within Ascent.
 
 %\fix{Matt: It is entirely supported for triggers to change the actions that are executed. I believe we should put more of an emphasis on this fact since this opens up a rich set of more dynamic workflows. We should only have to alter the last paragraph. I would like to include a simple example of dynamically changing actions.}
