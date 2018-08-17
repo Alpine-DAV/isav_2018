@@ -97,19 +97,18 @@ Triggers in Ascent are implemented as a set of classes.
 %
 The trigger base class is responsible for executing the derived classes trigger method and executing the actions if the trigger fires. 
 %
-Figure~\ref{inheritance} shows the class hierarchy of trigger types.
+Figure~\ref{inheritance} shows the class hierarchy of the various trigger types.
 %
 Derived trigger types implement a ``get\_data'' method that marshals a subset data from the full input data, possibly the entire data set.
 %
 For example the field trigger class extracts the requested field from the data set and forwards it to the derived class.
 %
 Stateful triggers inherit from both the trigger base type and the Stateful class, which contains the facilities to save and retrieve state information. 
-Figure~\ref{inheritance} shows the class hierarchy. 
 
 \fix{Triggers can be defined in the host code (domain-specific), directly into ascent (domain-agnostic), or exist as a python script on the file system (both). That said, one of the goals of the trigger infrastructure design is to encourage the sharing and re-use of different triggers. }
 
 \begin{figure}
-\includegraphics[width=4cm]{images/inheritance}
+\includegraphics[width=6cm]{images/inheritance}
 \caption{\label{inheritance} An inheritance diagram for the Ascent trigger infrastructure of a custom mesh trigger.}
 \end{figure}
 
@@ -129,14 +128,36 @@ public:
 protected:
   virtual const conduit::Node& get_data() = 0;
 };
+//Alternative:
+class Trigger : public ascent::flow::Filter
+{
+public:
+  virtual bool trigger() = 0;
+  void exectute()
+  {
+    bool fire = trigger();
+    if(fire)
+    {
+      // execute actions
+    } 
+  }
+};
+
+class MeshTrigger : public Trigger
+{
+protected:
+  const conduit::Node& get_mesh();
+};
 \end{lstlisting}
+
+
 
 \begin{lstlisting}[caption={The trigger state base class that provides methods for setting and retrieving state inforation stored in conduit nodes. State data is stored in a static key-value store accessible to all trigggers },captionpos=b]
 class TriggerState
 {
 protected:
- conduit::Node& get_state();
- void set_state(conduit::Node &state);
+ conduit::Node& get_state(std::string key);
+ void set_state(std::string key, conduit::Node &state);
 };
 
 \end{lstlisting}
