@@ -25,6 +25,9 @@ A more sophisticated way to reduce and summarize the data is to calculate a coar
 
 This can be done cheaply with a counted or weight-based histogram. (mention: exact or cumulative distribution would require a sort, which is not cheap)
 
+Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities. \cite{ecf07}
+
+All of these methods are cheap relative to full blown viz or io.
 
 \subsubsection{How to make decisions?}
 

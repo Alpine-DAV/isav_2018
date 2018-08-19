@@ -14,6 +14,14 @@
 
 Recent research into triggers can be characterized into two categories: 
 triggers that are domain-specific and triggers that are domain-agnostic. 
+
+
+\fix{Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (ie: simple aggregation, summary statistics, data-driven ML). These can be used generally by simulation applications and so there is value to sharing implementations.}
+
+
+\fix{Domain-specific triggers leverage algorithms that use special knowledge of either a simulation method or its scientific domain 
+(ie: triggering on a gradient calculated using specific finite-element method, or enstrophy for as a proxy for turbulence). These aren't as broadly applicable to all simulations but there is still value in sharing their implementations and its also important for an in-situ infrastructure to make it easy for users to provide their own logic.}
+
 %
 The organization of this section mirrors this current division in research. 
 
