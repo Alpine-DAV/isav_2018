@@ -4,6 +4,43 @@ This section consists of examples and use cases that people MUST have and that a
 %
 People can't live without triggers.
 
+
+\subsection{What Cyrus Plans to Add}
+\fix{These are ideas, not anywhere near final text}
+
+
+\subsubsection{How to reduce data?}
+
+\fix{These are ideas, not anywhere near final text}
+
+Triggers need to be cheap. They need to be useful. 
+
+From a user's perspective there are a few common constructs that are both cheap and useful.
+
+The most basic example is a simple aggregation of a field or a topological feature (min, max, mean, variance , integral).
+
+These are cheap bc you can simply loop over a field and the dist-mem combine is straight forward.
+
+A more sophisticated way to reduce and summarize the data is to calculate a coarse distribution of a field or a topological feature. 
+
+This can be done cheaply with a counted or weight-based histogram. (mention: exact or cumulative distribution would require a sort, which is not cheap)
+
+
+\subsubsection{How to make decisions?}
+
+\fix{These are ideas, not anywhere near final text}
+
+For simple agg: You can make a decision on one agg value, or can you can make a decision on a time history of an agg value.
+
+The one agg value is a basic threshold.  For the time history, you may care about critical points of the curve (min, max, saddle) or about a more complex property (dt jumps greater than z-percent, etc)
+
+You may need a smoothing function to make robust decisions about a time history curve. 
+
+For distributions, you can further reduce them using a summary metric (find percentiles, calc shannon entropy ).
+
+With a summary metric, you are back to threshold, or looking at the time history of the summary metric. 
+
+
 \subsection{Field Trigger Example}
 
 Potential examples: Max value greater than x. Entropy greater than Y. 
