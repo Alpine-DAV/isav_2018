@@ -69,6 +69,11 @@ Figure~\ref{clover_entropy} plots the entropy value of energy over 200 cycles du
 \caption{\label{clover_entropy} A plot of entropy over cycles of the energy field during a run of the hydrodynamics proxy-application Cloverleaf3D.}
 \end{figure}
 
+\begin{figure}
+\includegraphics[width=8cm]{images/clover_energy}
+\caption{\label{clover_entropy} A plot of energy over cycles of the energy field during a run of the hydrodynamics proxy-application Cloverleaf3D.}
+\end{figure}
+
 \subsection{Mesh Trigger Example}
 Some example of total domain volume using Lulush?
 
