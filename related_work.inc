@@ -16,12 +16,6 @@ Recent research into triggers can be characterized into two categories:
 triggers that are domain-specific and triggers that are domain-agnostic. 
 
 
-\fix{Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (ie: simple aggregation, summary statistics, data-driven ML). These can be used generally by simulation applications and so there is value to sharing implementations.}
-
-
-\fix{Domain-specific triggers leverage algorithms that use special knowledge of either a simulation method or its scientific domain 
-(ie: triggering on a gradient calculated using specific finite-element method, or enstrophy for as a proxy for turbulence). These aren't as broadly applicable to all simulations but there is still value in sharing their implementations and its also important for an in-situ infrastructure to make it easy for users to provide their own logic.}
-
 %
 The organization of this section mirrors this current division in research. 
 
@@ -30,6 +24,8 @@ system, although in some cases new inspection routines or VAS actions would
 need to be added to Ascent.
 
 \subsection{Domain-Agnostic Triggers}
+\fix{Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (e.g. simple aggregation, summary statistics, many machine learning techniques). These can be used generically by any simulation applications and there is value to sharing implementations.}
+
 
 Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant which is a barrier for many 
 in situ use cases. 
@@ -45,6 +41,9 @@ Banesh et al.~\cite{banesh} expanded on this work by utilizing change detection 
 And while this research utilizes application-specific parameters for their detection, the concept of change point detection can be applied to other simulations \cite{wendelberger}. 
 
 \subsection{Domain-Specific Triggers}
+\fix{Domain-specific triggers leverage algorithms that use special knowledge of either a simulation method or its scientific domain 
+(e.g. triggering on a gradient calculated using specific finite-element method, or enstrophy for as a proxy for turbulence). These are not as broadly applicable to any simulation, it is important for an in-situ infrastructure to support easy integration of these types of triggers.}
+
 There have been a number of works that have developed domain-specific triggers.
 %
 Work by Bennett et al.~\cite{bennett_siam} developed an application-specific trigger for ignition during combustion simulations. 
