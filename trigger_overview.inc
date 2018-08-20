@@ -1,18 +1,15 @@
 \section{Trigger Infrastructure Overview}
-\fix{HIGHLIGHT Python}
 Our trigger infrastructure is implemented in Ascent~\cite{Larsen:2017:ASI:3144769.3144778}, a fly-weight in situ visualization and analysis infrastructure.
 %
-Ascent's flexibility is derived from a generic data flow network called Flow.
-%\fix{Is there a reference for Flow?  Was it described in the ISAV17 paper?  If not, I propose that it go unnamed.}
-%\fix{Matt: yes it was.}
+Ascent's flexibility is underpinned by a generic data-flow network.
 %
-Filters in Flow have arbitrary inputs and outputs, and each component of Ascent is implemented as a Flow filter.
+Filters in the data-flow network have arbitrary inputs and outputs, and each component of Ascent is implemented as a filter.
 %
-The Ascent runtime translates data and actions described in the high level API into a data flow network that Flow executes.
+The Ascent runtime translates data and actions described in the high level API into a graph that is executed by the data-flow network.
 %
 Using this modular architecture, all of Ascent's components can be connected together.
 %
-The trigger implementation in Ascent is simply another filter in a larger data flow network.
+The trigger implementation in Ascent is simply another filter in a larger data-flow network.
 
 \subsection{Trigger Input}
 A trigger's input by default is the simulation's entire data set.
@@ -21,26 +18,20 @@ Optionally, triggers can consume the result of a set of data transformations.
 %
 For example, the input of a trigger could be result of a clip and an iso-surface.
 %
-%\fix{I think the preceding sentence involves more understanding of the Ascent paradigm than the reader may have.  I propose:
-%}
-%\fix{Confused.  I believe it would read better to me if you added an i.e., as
-%in ``pipeline, i.e., a set of...''}
-%
-
-
 
 \subsection{Trigger Types}
-The Ascent trigger infrastructure consists of different trigger types defined by the type of information used to evaluate the execution condition.
+Triggers can be broadly categorized by the types of data used inside the evaluation routine and whether or not the trigger maintains state.
 %
-A trigger's type determines what class of information the triggers inspection routine will process.
+%The Ascent trigger infrastructure supports several different trigger types defined by the type of information used to evaluate the execution condition.
 %
-The types of triggers supported in Ascent are:
+%A trigger's type determines what class of information the triggers inspection routine need to access.
+%
+The trigger types supported in Ascent are:
 
 \begin{itemize}
 \item \textbf{Field}: execution based on information about a specific field on the mesh
 \item \textbf{Mesh}: execution based on information about the mesh topology
 \item \textbf{State}: execution based on state information provided by the simulation
-%\fix{I am not sold on the term performance There is probably an overarching term that contains performance. Perhaps simulation state.}
 \end{itemize}
 
 Field triggers have access to all the values of a field on the mesh.
@@ -53,15 +44,15 @@ State triggers are passed custom data published by the simulation.
 %
 State data can not only include basic information like cycle and time, it can include simulation performance metrics.  
 %
-%\fix{Generally this data is performance information, but the simulation is free to publish any information.}
-%
 Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
-Unlike field and mesh triggers, state trigger actions execute have the option of using a reduced version of the mesh, where each simulation domain is represented as a single cell. 
 %
-By using a reduced version of the mesh, performance data can be projected back onto the simulation mesh, providing valuable insights into performance problems.
-%\fix{This seems very specific.  Would something like looking at wallclock and triggering every ten minutes fit under performance trigger?  ... I note sim code do this %already ... here, I am suggesting they do it through Ascent.}
 
-In addition to specific types of triggers, the Ascent trigger infrastructure allows two trigger variations:
+Our trigger infrastructure supports combining types, enabling the creation more complex inspection routines.
+%nlike field and mesh triggers, state trigger actions execute have the option of using a reduced version of the mesh, where each simulation domain is represented as a single cell. 
+%
+%By using a reduced version of the mesh, performance data can be projected back onto the simulation mesh, providing valuable insights into performance problems.
+
+In addition to trigger type, the Ascent trigger infrastructure allows two trigger variations:
 \begin{itemize}
 \item \textbf{Stateless}: trigger execution is independent of any previous invocations
 \item \textbf{Stateful}: the trigger that maintains state information about previous invocations
@@ -85,74 +76,57 @@ These actions direct Ascent to create pipelines (i.e., transforming data), extra
 %
 Trigger actions are defined by the same interface and thus all the same capabilities, including containing other triggers. 
 %
-Some examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
+Examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
 %
 Additionally, trigger actions can include other triggers that create a set of conditions(contained in multiple triggers) which all must  be satisfied before the final set of actions is performed.
 %
-Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of the graph, and the data flow network is extended based on the actions provided  by the user. Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating possibilities for dynamically adaptive visualization workflows.
+%Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of %the graph, and the data flow network is extended based on the actions provided  by the user. 
+Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating possibilities for dynamically adaptive visualization workflows.
 %
 
 \subsection{Implementation}
-Triggers in Ascent are implemented as a set of classes.
+Triggers functionality in Ascent are implemented in two classes.
 %
-The trigger base class is responsible for executing the derived classes trigger method and executing the actions if the trigger fires. 
+The trigger base class has a number of responsibilities including providing access to input data, validating parameters (e.g., actions), calling a derived class's trigger function, and executing the actions if the trigger fires. 
 %
-Figure~\ref{inheritance} shows the class hierarchy of the various trigger types.
+Derived triggers initialize the base class to register what types of data require for its evaluation routine.
 %
-Derived trigger types implement a ``get\_data'' method that marshals a subset data from the full input data, possibly the entire data set.
-%
-For example the field trigger class extracts the requested field from the data set and forwards it to the derived class.
+The only function a derived trigger is required to implement is the evaluation routine.
 %
 Stateful triggers inherit from both the trigger base type and the Stateful class, which contains the facilities to save and retrieve state information. 
+Listings~\ref{baseclass} and ~\ref{stateclass}
 
-\fix{Triggers can be defined in the host code (domain-specific), directly into ascent (domain-agnostic), or exist as a python script on the file system (both). That said, one of the goals of the trigger infrastructure design is to encourage the sharing and re-use of different triggers. }
+Triggers can be defined in the host code (domain-specific), directly into ascent (domain-agnostic), or exist as a python script on the file system (both). That said, one of the goals of the trigger infrastructure design is to encourage the sharing and re-use of different triggers.
 
-\begin{figure}
-\includegraphics[width=6cm]{images/inheritance}
-\caption{\label{inheritance} An inheritance diagram for the Ascent trigger infrastructure of a custom mesh trigger.}
-\end{figure}
+%\begin{figure}
+%\includegraphics[width=6cm]{images/inheritance}
+%\caption{\label{inheritance} An inheritance diagram for the Ascent trigger infrastructure of a custom mesh trigger.}
+%\end{figure}
 
-\begin{lstlisting}[caption={The trigger base class API. Each derived trigger type implements the ``get\_data'' method that retreives the appopriate topology, field, or state data from the input.},captionpos=b]
+\begin{lstlisting}[caption={The trigger base class API. Each derived trigger type implements the ``get\_data'' method that retreives the appopriate topology, field, or state data from the input.},captionpos=b, label={baseclass}]
 class Trigger : public Filter
 {
 public:
-  virtual bool trigger(const conduit::Node& data) = 0;
+  virtual bool trigger() = 0;
   void exectute()
   {
-  	bool fire = trigger(get_data());
+  	bool fire = trigger();
   	if(fire)
   	{
   	  // execute actions
   	} 
   }
 protected:
-  virtual const conduit::Node& get_data() = 0;
-};
-//Alternative:
-class Trigger : public ascent::flow::Filter
-{
-public:
-  virtual bool trigger() = 0;
-  void exectute()
-  {
-    bool fire = trigger();
-    if(fire)
-    {
-      // execute actions
-    } 
-  }
+  const conduit::Node& get_field();
+  const conduit::Node& get_topology();
+  const conduit::Node& get_get_coords();
+  const conduit::Node& get_state();
+  conduit::Node actions;
 };
 
-class MeshTrigger : public Trigger
-{
-protected:
-  const conduit::Node& get_mesh();
-};
 \end{lstlisting}
 
-
-
-\begin{lstlisting}[caption={The trigger state base class that provides methods for setting and retrieving state inforation stored in conduit nodes. State data is stored in a static key-value store accessible to all trigggers },captionpos=b]
+\begin{lstlisting}[caption={The trigger state base class that provides methods for setting and retrieving state inforation stored in conduit nodes. State data is stored in a static key-value store accessible to all trigggers },captionpos=b,label={stateclass}]
 class TriggerState
 {
 protected:
