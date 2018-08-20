@@ -113,7 +113,7 @@ Stateful triggers inherit from both the trigger base type and the Stateful class
 \end{figure}
 
 \begin{lstlisting}[caption={The trigger base class API. Each derived trigger type implements the ``get\_data'' method that retreives the appopriate topology, field, or state data from the input.},captionpos=b]
-class Trigger : public ascent::flow::Filter
+class Trigger : public Filter
 {
 public:
   virtual bool trigger(const conduit::Node& data) = 0;

@@ -77,10 +77,16 @@ Figure~\ref{clover_entropy} plots the entropy value of energy over 200 cycles du
 \caption{\label{clover_entropy} A plot of energy over cycles of the energy field during a run of the hydrodynamics proxy-application Cloverleaf3D.}
 \end{figure}
 
-\subsection{Mesh Trigger Example}
-Some example of total domain volume using Lulush?
+\subsection{Maximum Radial Distance Example}
+Lulesh~\cite{karlin2013lulesh}, included with Ascent, is a shock-hydrodynamics proxy-application that models the evolution of a shock-wave as it propagates from the center of the data set.
+%
+Often times scientists are only interested in analyzing simulation once the shock-wave has reached some radial distance from the origin of the wave.
+%
+To achive this, the maximum radial distance trigger combines field and topology information to track the distance of the cell containing the maximum pressure value and calculating the distance from a user provided point.
+%
+When the distance exceeds the threshold, the trigger fires.
 
-\subsection{Performance Trigger Example}
+\subsection{Simulation State Trigger Example}
 Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
 %
 Kripke is included with Ascent and implements a parallel sweep solver to solve the equations for deterministic neutron transport.
