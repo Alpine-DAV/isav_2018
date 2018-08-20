@@ -15,35 +15,6 @@ Using this modular architecture, all of Ascent's components can be connected tog
 The trigger implementation in Ascent is simply another filter in a larger data flow network.
 
 
-\subsection{Trigger Decisions}
-
-Two Parts: Data Reduction and Decide to Fire.
-
-\subsubsection{Reduce the data}
-%Triggers need to be cheap. They need to be useful. 
-
-The first step in the decision process is to reduce the input simulation data. The data reduction may leverage a pipeline of existing VAS actions, or it may be a simple data summarization algorithm. While triggers can leverage expensive algorithms, in practice they are often used to reduce overall computation by screening data before applying more expensive VAS actions. 
-Because of this, inexpensive data reduction techniques are important. 
-
-
-%From a user's perspective there are a few common constructs that are both cheap and useful. 
-The most basic technique is a simple aggregation of a field or a topological feature (minimum, maximum, mean, variance, integral, etc).
-These are inexpensive because they do not require much intermediate memory, are typically  O(number\_of\_elements) and their distributed-memory implementations are straightforward and scalable.
-
-
-A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. (mention: exact or cumulative distribution would require a sort, which is not cheap). Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization. \cite{ecf07} For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. 
-
-\subsubsection{Decide to fire}
-
-The next step in the decision process is to apply a final test to determine if the trigger should fire. 
-
-You can base the decision on the simulation's current aggregate value, or can you can make a decision using the time history of the aggregate values from previously published data. 
-
-The standard menu of numeric comparison operations (e.g. greater-than, less-than, equal, etc) are useful building blocks for deciding to fire using a single value. 
- 
-For the time history, you may care about critical points of the curve (minimum, maximum, saddle points),  or about a more complex property, such as the value changing more than some percentage of the current peak. You may need a smoothing function to make robust decisions about a time history curve. 
-
-
 \subsection{Trigger Input}
 A trigger's input by default is the simulation's entire data set.
 %
@@ -56,10 +27,12 @@ For example, the input of a trigger could be result of a clip and an iso-surface
 %\fix{Confused.  I believe it would read better to me if you added an i.e., as
 %in ``pipeline, i.e., a set of...''}
 %
-
+\fix{Ascent triggers make decisions using Mesh-Blueprint data. 
+In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
 
 
 \subsection{Trigger Types}
+\fix{Cyrus's Note: Some of this I have captured in the Trigger Decisions Section, some of it can be moved into Trigger Input section above}
 The Ascent trigger infrastructure consists of different trigger types defined by the type of information used to evaluate the execution condition.
 %
 A trigger's type determines what class of information the triggers inspection routine will process.
@@ -107,6 +80,36 @@ For example, a trigger might only fire if the information in the current time st
 %
 The state data is completely arbitrary and could range from a single value, a series of values from all previous time steps, or to the entire published data from a previous time step.
 %
+
+\subsection{Trigger Decisions}
+
+Two Parts: Data Reduction and Decide to Fire.
+
+\subsubsection{Reduce the data}
+%Triggers need to be cheap. They need to be useful. 
+
+The first step in the decision process is to reduce the input simulation data. The data reduction may leverage a pipeline of existing VAS actions, or it may be a simple data summarization algorithm. While triggers can leverage expensive algorithms, in practice they are often used to reduce overall computation by screening data before applying more expensive VAS actions. 
+Because of this, inexpensive data reduction techniques are important. 
+
+
+%From a user's perspective there are a few common constructs that are both cheap and useful. 
+The most basic technique is a simple aggregation of a field or a topological feature (minimum, maximum, mean, variance, integral, etc).
+These are inexpensive because they do not require much intermediate memory, are typically  O(number\_of\_elements) and their distributed-memory implementations are straightforward and scalable.
+
+
+A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. (mention: exact or cumulative distribution would require a sort, which is not cheap). Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization. \cite{ecf07} For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. 
+
+\subsubsection{Decide to fire}
+
+The next step in the decision process is to apply a final test to determine if the trigger should fire. 
+
+You can base the decision on the simulation's current aggregate value, or can you can make a decision using the time history of the aggregate values from previously published data. 
+
+The standard menu of numeric comparison operations (e.g. greater-than, less-than, equal, etc) are useful building blocks for deciding to fire using a single value. 
+ 
+For the time history, you may care about critical points of the curve (minimum, maximum, saddle points),  or about a more complex property, such as the value changing more than some percentage of the current peak. You may need a smoothing function to make robust decisions about a time history curve. 
+
+
 
 \subsection{Trigger Actions}
 Ascent executes a set of actions described by the user. 
