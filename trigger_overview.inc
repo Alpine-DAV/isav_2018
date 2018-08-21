@@ -19,7 +19,7 @@ The trigger implementation in Ascent is simply another filter in a larger data-f
 % \fix{Ascent triggers make decisions using Mesh-Blueprint data.
 % In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
 
-Ascent's trigger filters process Conduit\cite{} data that conforms to the Mesh Blueprint\cite{}. This is the same data representation used to publish data to Ascent.  Since the results Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by the evaluation routine.
+Ascent's trigger filters process Conduit\cite{} data that conforms to the Mesh Blueprint\cite{}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by the evaluation routine.
 %
 In Ascent we define following categories of triggers:
 \begin{itemize}
@@ -45,7 +45,7 @@ This includes both basic information like the simulation time and cycle, and cus
 Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
 %
 
-Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions each category.
+Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions for each category.
 
 %
 %Our trigger infrastructure supports combining types, enabling the creation more complex inspection routines.
@@ -55,7 +55,7 @@ Categorizing triggers is useful for declaring a trigger's purpose (i.e., what da
 
 Two Parts: Data Reduction and Decide to Fire.
 
-\subsubsection{Reduce the data}
+\subsubsection{Data Reduction}
 %Triggers need to be cheap. They need to be useful. 
 
 The first step in the decision process is to reduce the input simulation data. The data reduction may leverage a pipeline of existing VAS actions, or it may be a simple data summarization algorithm. While triggers can leverage expensive algorithms, in practice they are often used to reduce overall computation by screening data before applying more expensive VAS actions. 
@@ -66,9 +66,9 @@ Because of this, inexpensive data reduction techniques are important.
 The most basic technique is a simple aggregation of a field or a topological feature (minimum, maximum, mean, variance, integral, etc).
 These are inexpensive because they do not require much intermediate memory, are typically  O(number\_of\_elements) and their distributed-memory implementations are straightforward and scalable.
 %
-In Ascent, we are provide a small set of methods that will serve as the building blocks for trigger development and encourage code re-use.
+In Ascent, we provide a small set of methods that will serve as building blocks for trigger development and encourage code re-use.
 %
-Current methods include retrieving the min and max values of a field, along with the cell or point it originated from, and getting a cells location.
+Current methods include retrieving the minimum and maximum values of a field, along with the element or vertex it originated from, and the element's location.
 %
 As we continue to develop Ascent, the set of available methods will increase.
 
@@ -96,15 +96,19 @@ In Ascent we provide methods for storing and retrieving arbitrary state data, an
 
 
 \subsection{Trigger Actions}
-Ascent executes a set of actions described by the user. 
+Ascent's interface supports execution of a set of actions described by the user. 
 %
-These actions direct Ascent to create pipelines (i.e., transforming data), extracts (i.e., capture data), and  scenes (i.e., making pictures).
-%
-Trigger actions are defined by the same interface and thus all the same capabilities, including containing other triggers. 
+These actions direct Ascent to create pipelines (i.e., transform data), extracts (i.e., capture data), and  scenes (i.e., make pictures). The new trigger infrastructure extends Ascent's interface to accept trigger declarations.
+
+The declaration accepts a trigger name, any input parameters needed for the evaluation, and a set of 
+actions to execute if the trigger fires. 
+
+The set of actions is declared using same Ascent interface, thus exposing all of Ascent's capabilities including declaring new triggers.
+
 %
 Examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
 %
-Additionally, trigger actions can include other triggers that create a set of conditions(contained in multiple triggers) which all must  be satisfied before the final set of actions is performed.
+Additionally, trigger actions can include other triggers that create a set of conditions (contained in multiple triggers) which all must be satisfied before the final set of actions is performed.
 %
 %Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of %the graph, and the data flow network is extended based on the actions provided  by the user. 
 Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating possibilities for dynamically adaptive visualization workflows.
