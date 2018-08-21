@@ -1,8 +1,6 @@
 \section{Trigger Examples}
-\fix{Do these examples have to be real or just potential use cases? I feel like compelling use cases could be more impactful.}
-This section consists of examples and use cases that people MUST have and that are extremely useful. 
+In this section, we demonstrate examples of triggers in Ascent, each using a different combinations of trigger inputs. 
 %
-People can't live without triggers.
 
 \subsection{Field Trigger Example}
 
@@ -42,7 +40,9 @@ Lulesh~\cite{karlin2013lulesh}, included with Ascent, is a shock-hydrodynamics p
 %
 Often times scientists are only interested in analyzing simulation once the shock-wave has reached some radial distance from the origin of the wave.
 %
-To achive this, the maximum radial distance trigger combines field and topology information to track the distance of the cell containing the maximum pressure value and calculating the distance from a user provided point.
+Knowing exactly when the shock-wave passes a point is problem dependent since it changes both with the input deck and problem size. 
+%
+In Ascent the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the cell containing the maximum pressure value and calculating the distance from a user provided.
 %
 When the distance exceeds the threshold, the trigger fires.
 
