@@ -13,12 +13,8 @@
 %The organization of this section mirrors this current division in research. 
 
 Recent research into triggers can be characterized into two categories: 
-triggers that are domain-specific and triggers that are domain-agnostic. 
-
-
+triggers that are domain-specific and triggers that are domain-agnostic, and the organization of this section mirrors this current division in research. 
 %
-The organization of this section mirrors this current division in research. 
-
 Conceptually, each of the works surveyed below could be supported by our
 system, although in some cases new inspection routines or VAS actions would
 need to be added to Ascent.

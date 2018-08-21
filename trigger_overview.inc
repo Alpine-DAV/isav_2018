@@ -102,7 +102,7 @@ These actions direct Ascent to create pipelines (i.e., transform data), extracts
 
 The declaration accepts a trigger name, any input parameters needed for the inspection routine, and a set of 
 actions to execute if the trigger fires. 
-
+%
 The set of actions is declared using same Ascent interface, thus exposing all of Ascent's capabilities including declaring new triggers.
 
 %
@@ -113,6 +113,30 @@ Additionally, trigger actions can include other triggers that create a set of co
 %Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of %the graph, and the data flow network is extended based on the actions provided  by the user. 
 Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating dynamically adaptive visualization workflows.
 %
+
+\subsection{Trigger API}
+Our trigger API matches the rest of Ascent and triggers are described using conduit nodes.
+%
+Listing~\ref{triggerAPI} shows an example of specifying a stateless threshold trigger of the field pressure that fires when the condition is true.
+%
+\begin{lstlisting}[caption={An example of the user-facing trigger API. This triggers executes the actions when the maximum value of the pressure field is greater than or equal to 3.14.},captionpos=b, label={triggerAPI}]
+conduit::Node actions;
+// trigger actions not shown
+conduit::Node trigger;
+trigger["type"] = "threshold";
+trigger["params/field"] = "pressure";
+trigger["params/actions"] = actions;
+trigger["params/reduction"] = "max";
+trigger["params/compare/type"] = "gte";
+trigger["params/compare/value"] = 3.14;
+\end{lstlisting}
+The threshold triggers supports several reductions including ``min'', ``max'', and ``average''.
+%
+As we continue to develop the infrastructure, the menu of available reduction operations will increase.
+%
+After the reduction, the trigger evaluates the condition ``gte'', greater than or equal to, against the ``value'' and the result of the reduction.
+%
+
 
 \iffalse
 \subsection{Implementation}
