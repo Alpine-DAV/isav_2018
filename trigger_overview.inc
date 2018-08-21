@@ -15,32 +15,40 @@ The trigger implementation in Ascent is simply another filter in a larger data-f
 
 
 \subsection{Trigger Input}
-\fix{Ascent triggers make decisions using Mesh-Blueprint data. 
-In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
-Triggers can be broadly categorized by the types of simulation data used inside the evaluation routine.
+
+% \fix{Ascent triggers make decisions using Mesh-Blueprint data.
+% In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
+
+Ascent's trigger filters process Conduit\cite{} data that conforms to the Mesh Blueprint\cite{}. This is the same data representation used to publish data to Ascent.  Since the results Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by the evaluation routine.
 %
-Triggers in Ascent we use the define the following trigger types:
+In Ascent we define following categories of triggers:
 \begin{itemize}
-\item \textbf{Field}: execution based on information about a specific field on the mesh
-\item \textbf{Mesh}: execution based on information about the mesh topology
-\item \textbf{State}: execution based on state information provided by the simulation
+\item \textbf{Field}: examine a specific field on the mesh
+\item \textbf{Topology}: examine a specific mesh topology
+\item \textbf{Coordinate Set}: examine a specific coordinate set from the mesh
+\item \textbf{State}: examine state metadata 
 \end{itemize}
-Field triggers have access to all the values of a field on the mesh.
+
+Field triggers have access to all the values of a named field on the mesh.
 %
 A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
+% 
+% need to rework these sentences english wise
+Topology triggers are passed a named mesh topology. An example of topology trigger would examine the mesh, firing when a tangle is detected.
 %
-Mesh triggers are passed mesh topology data, and a example of mesh trigger would examine the mesh, firing when a tangle is detected.
+% need to rework these sentences english wise
+Coordinate Set triggers are passed a named coordinate set. An example of coordinate set trigger would examine the coordinates, firing when a bounding box grows to a given size.
 %
-State triggers are passed custom data published by the simulation.
-%
-State data can not only include basic information like cycle and time, it can include simulation performance metrics.  
+State triggers consume extra metadata associated with the mesh. 
+This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
 %
 Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
 %
 
-Explicit trigger classification is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and the sharing of common code such as parameter verification.
+Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions each category.
+
 %
-Our trigger infrastructure supports combining types, enabling the creation more complex inspection routines.
+%Our trigger infrastructure supports combining types, enabling the creation more complex inspection routines.
 
  
 \subsection{Trigger Decisions}
