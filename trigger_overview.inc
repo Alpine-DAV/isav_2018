@@ -115,6 +115,7 @@ Since triggers have access to the input actions, it is possible for triggers to 
 %
 
 \subsection{Trigger API}
+\label{sec:triggerAPI}
 Our trigger API matches the rest of Ascent and triggers are described using conduit nodes.
 %
 Listing~\ref{triggerAPI} shows an example of specifying a stateless threshold trigger of the field pressure that fires when the condition is true.
@@ -136,6 +137,17 @@ As we continue to develop the infrastructure, the menu of available reduction op
 %
 After the reduction, the trigger evaluates the condition ``gte'', greater than or equal to, against the ``value'' and the result of the reduction.
 %
+
+\subsection{Trigger Development}
+Our goal in Ascent is making trigger development as easy as possible. 
+%
+To that end, we provide a trigger base class for that contains methods verifying parameters, provides easy access to input data (e.g., state, field, coordinate sets, and topology data), and trigger execution.
+%
+The only methods a trigger must implement is the ``trigger'' function that returns true or false and the verification of any trigger specific parameters.
+%
+A trigger implementer only needs to manipulate data contained in Conduit nodes and does not need any knowledge about the internals of Ascent.
+%
+Additionally, we are building a set of data reductions, such as the ones mentioned in Section~\ref{sec:triggerAPI} that are available to trigger developers.
 
 
 \iffalse
