@@ -9,7 +9,7 @@ The Ascent runtime translates data and actions described in the high level API i
 %
 Using this modular architecture, all of Ascent's components can be connected together.
 %
-The trigger implementation in Ascent is simply another filter in a larger data-flow network that can dependently create further nodes in the execution graph.
+The trigger implementation in Ascent is simply another filter in a larger data-flow network that can conditionally modify the filters in the execution graph.
 
 \fix{In this section, we discuss what types of simulation data are used to make decisions, how decisions are made, and what types of actions are supported.}
 
@@ -19,14 +19,14 @@ The trigger implementation in Ascent is simply another filter in a larger data-f
 % \fix{Ascent triggers make decisions using Mesh-Blueprint data.
 % In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
 
-Ascent's trigger filters process Conduit\cite{} data that conforms to the Mesh Blueprint\cite{}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by the evaluation routine.
+Ascent's trigger filters process Conduit\cite{conduit} data that conforms to the Mesh Blueprint\cite{conduitblueprint}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
 %
 In Ascent we define following categories of triggers:
 \begin{itemize}
-\item \textbf{Field}: examine a specific field on the mesh
-\item \textbf{Topology}: examine a specific mesh topology
-\item \textbf{Coordinate Set}: examine a specific coordinate set from the mesh
-\item \textbf{State}: examine state metadata 
+\item \textbf{Field}: inspect a specific field on the mesh
+\item \textbf{Topology}: inspect a specific mesh topology
+\item \textbf{Coordinate Set}: inspect a specific coordinate set from the mesh
+\item \textbf{State}: inspect state metadata 
 \end{itemize}
 
 Field triggers have access to all the values of a named field on the mesh.
@@ -34,10 +34,10 @@ Field triggers have access to all the values of a named field on the mesh.
 A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
 % 
 % need to rework these sentences english wise
-Topology triggers are passed a named mesh topology. An example of topology trigger would examine the mesh, firing when a tangle is detected.
+Topology triggers are passed a named mesh topology. An example of topology trigger would inspect the mesh, firing when a tangle is detected.
 %
 % need to rework these sentences english wise
-Coordinate Set triggers are passed a named coordinate set. An example of coordinate set trigger would examine the coordinates, firing when a bounding box grows to a given size.
+Coordinate Set triggers are passed a named coordinate set. An example of coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
 %
 State triggers consume extra metadata associated with the mesh. 
 This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
@@ -53,7 +53,7 @@ Categorizing triggers is useful for declaring a trigger's purpose (i.e., what da
  
 \subsection{Trigger Decisions}
 
-Two Parts: Data Reduction and Decide to Fire.
+Triggers make a binary (yes/no) decision to execute a set conditional set of actions. This process involves data reduction and and a final decision to fire.
 
 \subsubsection{Data Reduction}
 %Triggers need to be cheap. They need to be useful. 
@@ -64,17 +64,17 @@ Because of this, inexpensive data reduction techniques are important.
 
 %From a user's perspective there are a few common constructs that are both cheap and useful. 
 The most basic technique is a simple aggregation of a field or a topological feature (minimum, maximum, mean, variance, integral, etc).
-These are inexpensive because they do not require much intermediate memory, are typically  O(number\_of\_elements) and their distributed-memory implementations are straightforward and scalable.
+These are inexpensive because they do not require much intermediate memory, are typically simple linear loops over values and their distributed-memory implementations are straightforward and scalable.
 %
-In Ascent, we provide a small set of methods that will serve as building blocks for trigger development and encourage code re-use.
+In Ascent, we provide a small set of methods that serve as building blocks for trigger development and encourage code re-use.
 %
 Current methods include retrieving the minimum and maximum values of a field, along with the element or vertex it originated from, and the element's location.
 %
 As we continue to develop Ascent, the set of available methods will increase.
 
-A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. (mention: exact or cumulative distribution would require a sort, which is not cheap). Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization. \cite{ecf07} For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. 
+A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. Calculating exact cumulative distributions requires an expensive global sort, so we do not plan to implement these. Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization. \cite{ecf07} For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
 
-\subsubsection{Decide to fire}
+\subsubsection{Decision to fire}
 
 The next step in the decision process is to apply a final test to determine if the trigger should fire. 
 
@@ -84,11 +84,11 @@ The Ascent trigger infrastructure allows two trigger variations:
 \item \textbf{Stateful}: the trigger that maintains state information about previous invocations
 \end{itemize}
 
-Stateless decisions can be are made on the simulation's current aggregate value, and stateless decisions using the time history of the aggregate values from previously published data. 
+Stateless decisions are made using only the simulation's current published data, and stateful decisions can use the time history of the aggregate values from previously published data. 
 %
 In the stateless case, the standard menu of numeric comparison operations (e.g. greater-than, less-than, equal, etc) are useful building blocks for deciding to fire using a single value. 
 %
-For the stateful case, trigger firing can be based on critical points of the curve (minimum, maximum, saddle points),  or about a more complex property, such as the value changing more than some percentage of the current peak. 
+For the stateful case, trigger firing can be based on critical points of the curve (minimum, maximum, saddle points),  or leverage a  more complex property, such as the value changing more than some percentage of the current peak. 
 %
 %You may need a smoothing function to make robust decisions about a time history curve. 
 %
@@ -100,7 +100,7 @@ Ascent's interface supports execution of a set of actions described by the user.
 %
 These actions direct Ascent to create pipelines (i.e., transform data), extracts (i.e., capture data), and  scenes (i.e., make pictures). The new trigger infrastructure extends Ascent's interface to accept trigger declarations.
 
-The declaration accepts a trigger name, any input parameters needed for the evaluation, and a set of 
+The declaration accepts a trigger name, any input parameters needed for the inspection routine, and a set of 
 actions to execute if the trigger fires. 
 
 The set of actions is declared using same Ascent interface, thus exposing all of Ascent's capabilities including declaring new triggers.
@@ -111,7 +111,7 @@ Examples of trigger actions are saving the entire mesh to disk, creating a pipel
 Additionally, trigger actions can include other triggers that create a set of conditions (contained in multiple triggers) which all must be satisfied before the final set of actions is performed.
 %
 %Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of %the graph, and the data flow network is extended based on the actions provided  by the user. 
-Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating possibilities for dynamically adaptive visualization workflows.
+Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating dynamically adaptive visualization workflows.
 %
 
 \iffalse
@@ -120,9 +120,9 @@ Triggers functionality in Ascent are implemented in two classes.
 %
 The trigger base class has a number of responsibilities including providing access to input data, validating parameters (e.g., actions), calling a derived class's trigger function, and executing the actions if the trigger fires. 
 %
-Derived triggers initialize the base class to register what types of data require for its evaluation routine.
+Derived triggers initialize the base class to register what types of data require for its inspection routine.
 %
-The only function a derived trigger is required to implement is the evaluation routine.
+The only function a derived trigger is required to implement is the inspection routine.
 %
 Stateful triggers inherit from both the trigger base type and the Stateful class, which contains the facilities to save and retrieve state information. 
 Listings~\ref{baseclass} and ~\ref{stateclass}

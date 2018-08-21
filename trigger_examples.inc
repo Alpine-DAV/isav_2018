@@ -1,5 +1,6 @@
 \section{Trigger Examples}
-In this section, we demonstrate examples of triggers in Ascent, each using a different combinations of trigger inputs. 
+In this section, we demonstrate a few examples of using Ascent triggers that inspect different combinations of trigger inputs.
+These examples use Ascent's built-in proxy applications, because they provide a simple path to motivate and show common use cases.
 %
 
 \subsection{Field Trigger Example}
@@ -9,9 +10,9 @@ Potential examples: Max value greater than x. Entropy greater than Y.
 Actions: save mesh to disk or same some isosurface to disk.
 
 \subsection{Stateful Field Trigger Example}
-A simple example of a stateful trigger is a trigger based on entropy.
+A simple example of a stateful trigger is a trigger based on the shannon entropy of a field's distribution function.
 %
-The entropy trigger calculates the distributed-memory histogram of a field on the data set, and using the values of the histogram, calculates entropy using the formula:
+The entropy trigger calculates the distributed-memory histogram of a field on the data set, and uses the values of the histogram to calculate entropy using the formula:
 \begin{equation}
 H(X) = -\sum\limits_{i=1}^n P(x_{i}) log_{2}P(x_{i})
 \end{equation}
@@ -36,15 +37,22 @@ Figure~\ref{clover_entropy} plots the entropy value of energy over 200 cycles du
 \end{figure}
 
 \subsection{Maximum Radial Distance Example}
-Lulesh~\cite{karlin2013lulesh}, included with Ascent, is a shock-hydrodynamics proxy-application that models the evolution of a shock-wave as it propagates from the center of the data set.
+There are several cases where expensive processing is only necessary after a simulation model has evolved to a certain regime that cannot easily be identified a priori based on simulation time. 
+
+To demonstrate this type of use case, we developed a trigger for Lulesh~\cite{karlin2013lulesh}, 
+%included with Ascent, is 
+a shock-hydrodynamics proxy-application that models the evolution of a shock-wave as it propagates from the origin of the simulation.
 %
-Often times scientists are only interested in analyzing simulation once the shock-wave has reached some radial distance from the origin of the wave.
+The trigger executes actions after the main shock-wave has reached a specified radial distance from the origin of the simulation.
+
+
+%Often times scientists are only interested in analyzing simulation once the shock-wave has reached some radial distance from the origin of the wave.
 %
 Knowing exactly when the shock-wave passes a point is problem dependent since it changes both with the input deck and problem size. 
 %
-In Ascent the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the cell containing the maximum pressure value and calculating the distance from a user provided.
+In Ascent the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the element containing the maximum pressure value.
 %
-When the distance exceeds the threshold, the trigger fires.
+When this distance exceeds the threshold, the trigger fires.
 
 \subsection{Simulation State Trigger Example}
 Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
