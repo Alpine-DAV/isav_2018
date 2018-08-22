@@ -1,14 +1,4 @@
 \section{Trigger Examples}
-\begin{figure*}[h]
-
-\centering
-\includegraphics[width=.24\textwidth]{images/max_radial}\hfill
-\includegraphics[width=.24\textwidth]{images/kripke_max_backlog}\hfill
-\includegraphics[width=.24\textwidth]{images/clover_plot}
-\includegraphics[width=.24\textwidth]{images/clover_energy}
-
-\caption{\label{images_figure}default}
-\end{figure*}
 
 
 In this section, we demonstrate a few examples of using Ascent triggers that inspect different combinations of trigger inputs.
@@ -16,13 +6,23 @@ These examples use Ascent's built-in proxy applications, because they provide a 
 %
 
 
-\subsection{Field Trigger Example}
+\subsection{Threshold Trigger}
 The maximum value of a field value over time is a quantity of interest in physics simulations.
 %
-Figure~\ref{images_figure}
+To track the maximum value, stateless triggers should fire whenever the maximum field value exceeds a predefined value as described in Listing~\ref{triggerAPI}. 
+%
+The rightmost image in Figure~\ref{images_figure} plots the maximum energy value through 1000 cycles of the CloverLeaf3D hydrodynamics proxy-application.
+%
+The maximum value spikes as waves of energy reflect off the boundary and collide in the center of the data set, indicated by a 400\% increase in the maximum value.
+%
 
+We used a stateless threshold trigger to capture the collision by setting the threshold at an energy value of 10.
+%
+Additionally, we developed a stateful trigger that identified that peak of the energy spike by tracking the maximum over all timesteps.
+%
+With the stateful trigger, the entire field is stored in memory each time a higher value is encountered, and at the end of the simulation, the timestep is saved to disk for further analysis.
 
-\subsection{Stateful Field Trigger Example}
+%\subsection{Stateful Field Trigger}
 \iffalse
 A simple example of a stateful trigger is a trigger based on the shannon entropy of a field's distribution function.
 %
@@ -74,7 +74,7 @@ In Ascent the maximum radial distance trigger combines field, topology, and coor
 When this distance exceeds the threshold, the trigger fires.
 
 
-\subsection{Simulation State Trigger Example}
+\subsection{Simulation State Trigger}
 Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
 %
 Kripke is included with Ascent and implements a parallel sweep solver to solve the equations for deterministic neutron transport.
@@ -94,6 +94,3 @@ Using performance visualization techniques can both highlight performance bottle
 %\includegraphics[width=8cm]{images/kripke_max_backlog}
 %\caption{\label{max_backlog} A volume plot of the each MPI task's maximum backlog of unanswered queries from surrounding tasks from a run consisting of 512 MPI %tasks.}
 %\end{figure}
-
-\subsection{Dynamic Actions Example}
-Simple example of dynamic actions.
