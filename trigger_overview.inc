@@ -5,7 +5,7 @@ Ascent's flexibility is underpinned by a generic data-flow network.
 %
 Filters in a data-flow network have arbitrary inputs and outputs, and each component of Ascent is implemented as a filter.
 %
-The Ascent runtime translates data and actions described in the high level API into a graph that is executed by the data-flow network.
+The Ascent runtime translates data and actions described in the high\fix{-}level API into a graph that is executed by the data-flow network.
 %
 Using this modular architecture, all of Ascent's components can be connected together.
 %
@@ -27,14 +27,16 @@ Since outputs from Ascent operations can also be converted to Mesh Blueprint dat
 %
 The triggers have access to all of the mesh data, however it is useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
 %
-Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions for each category.
+Categorizing triggers is useful for declaring a trigger's purpose (i.e., what
+data is used to make decisions) and \fix{for sharing a common set of} parameter verification code that checks pre-conditions for each category.
 
-In Ascent, we define following categories of triggers:
+In Ascent, we define \fix{the} following categories of triggers:
 \begin{itemize}
 \item \textbf{Field}: inspect a specific field on the mesh.
 Field triggers have access to all the values of a named field on the mesh.
 %
-A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
+A simple example of a field trigger is one that fires when the maximum value
+exceeds a user\fix{-}defined threshold.
 % 
 \item \textbf{Topology}: inspect a specific mesh topology.
 Topology triggers are passed a named mesh topology. An example topology trigger would inspect the mesh, firing when a tangle is detected.
@@ -44,10 +46,11 @@ Topology triggers are passed a named mesh topology. An example topology trigger 
 \item \textbf{Coordinate Set}: inspect a specific coordinate set from the mesh.
 % need to rework these sentences english wise
 Coordinate Set triggers are passed a named coordinate set. An example coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
-\item \textbf{State}: inspect state metadata.
+\item \textbf{State}: inspect state \fix{metadata}.
 %
 State triggers consume extra metadata associated with the mesh. 
-This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
+This includes both basic information\fix{, such as simulation} time and
+cycle, and custom data\fix{,} such as simulation performance metrics.  
 %
 Examples of state triggers are fire every $N$ cycles or fire when a performance metric rises above some critical threshold.
 \end{itemize}
@@ -58,9 +61,10 @@ Examples of state triggers are fire every $N$ cycles or fire when a performance 
 
 Triggers make a binary (yes/no) decision to execute a set of actions. 
 %
-When using only state meta-data, a trigger considers a single value, e.g. firing every $N$ cycles.
+When using only state \fix{meta-data}, a trigger considers a single value, e.g. firing every $N$ cycles.
 %
-When using problem size data such as a field, the data must be reduced to make a final decision to fire.
+When using problem size data such as a field, the data must \fix{first} be
+reduced \fix{before making} a final decision to fire.
 %
 %This process may involve data reduction and a final decision to fire.
 
@@ -81,7 +85,11 @@ Current methods include retrieving the minimum and maximum values of a field, al
 %
 As we continue to develop Ascent, the set of available methods will increase.
 
-A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. Calculating exact cumulative distributions requires an expensive global sort, so we do not plan to implement these. Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization~\cite{ecf07}. For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
+A more sophisticated way to reduce data is to calculate a coarse distribution
+of a field or a topological feature. This can be calculated inexpensively with
+a counting or weight-based histogram. Calculating exact cumulative
+distributions requires an expensive global sort, so we do not plan to implement
+these. Multi\fix{-}dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization~\cite{ecf07}. For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
 
 \subsubsection{Decision to fire}
 
@@ -112,12 +120,14 @@ These actions direct Ascent to create pipelines (i.e., transform data), extracts
 The declaration accepts a trigger name, any input parameters needed for the inspection routine, and a set of 
 actions to execute if the trigger fires. 
 %
-The set of actions is declared using same Ascent interface, thus exposing all of Ascent's capabilities including declaring new triggers.
+The set of actions is declared using \fix{the} same Ascent interface \fix{as?},
+thus exposing all of Ascent's capabilities including \fix{declaration of} new triggers.
 
 %
 Examples of trigger actions are saving the entire mesh to disk, creating a pipeline to transform the data and saving the resulting extract, or rendering images. 
 %
-Additionally, trigger actions can include other triggers that create a set of conditions (contained in multiple triggers) which all must be satisfied before the final set of actions is performed.
+Additionally, trigger actions can include other triggers that create a set of
+conditions (contained in multiple triggers)\fix{,} which all must be satisfied before the final set of actions is performed.
 %
 %Initially, triggers are a sink in the data flow network. If the trigger fires, the sink is converted into an inner node of %the graph, and the data flow network is extended based on the actions provided  by the user. 
 Since triggers have access to the input actions, it is possible for triggers to themselves modify the actions, creating dynamically adaptive visualization workflows.
@@ -125,7 +135,8 @@ Since triggers have access to the input actions, it is possible for triggers to 
 
 \subsection{Trigger API}
 \label{sec:triggerAPI}
-Our trigger API matches the rest of Ascent and triggers are described using conduit nodes.
+Our trigger API matches the rest of Ascent \fix{what?} and triggers are described using
+\fix{C}onduit nodes.
 %
 Listing~\ref{triggerAPI} shows an example of specifying a stateless threshold trigger of the field pressure that fires when the condition is true.
 %
@@ -150,9 +161,13 @@ After the reduction, the trigger evaluates the condition ``gte'' (greater-than-o
 \subsection{Developing New Triggers in Ascent}
 Our goal in Ascent is making trigger development as easy as possible. 
 %
-To that end, we provide a trigger base class for that contains methods verifying parameters, provides easy access to input data (e.g., state, field, coordinate sets, and topology data), and trigger execution.
+To that end, we provide a trigger base class \fix{that} contains methods
+\fix{to verify} parameters, \fix{to provide} easy access to input data (e.g.,
+state, field, coordinate sets, and topology data), and \fix{to execute the
+trigger}.
 %
-The only methods a trigger must implement is the ``trigger'' function that returns true or false and the verification of any trigger specific parameters.
+The only methods a trigger must implement \fix{are} the ``trigger'' function
+that returns true or false and the verification \fix{function} of any trigger specific parameters.
 %
 A trigger implementer only needs to manipulate data contained in Conduit nodes and does not need any knowledge about the internals of Ascent.
 %

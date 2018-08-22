@@ -8,7 +8,9 @@
 %
 %But in some cases, not all of these trigger characteristics can be met. 
 %
-%The recent research into triggers can be divided into two camps: triggers that are domain-specific and triggers that are domain-agnostic. 
+%The recent research into triggers can be divided into two camps: triggers that are 
+\fix{domain-agnostic} and triggers that are \fix{domain-specific}
+%domain-specific and triggers that are domain-agnostic. 
 %
 %The organization of this section mirrors this current division in research. 
 
@@ -37,13 +39,15 @@ And while this research utilizes application-specific parameters for their detec
 
 \subsection{Domain-Specific Triggers}
 Domain-specific triggers leverage algorithms that use special knowledge of either a simulation method or its scientific domain 
-(e.g. triggering on a gradient calculated using specific finite-element method, or enstrophy for as a proxy for turbulence). These are not as broadly applicable to any simulation, so it is important for an in-situ infrastructure to support integrating custom algorithms to support these types of triggers.
+(e.g. triggering on a gradient calculated using specific finite-element method,
+or \fix{entropy} for as a proxy for turbulence). These are not as broadly applicable to any simulation, so it is important for an in situ infrastructure to support integrating custom algorithms to support these types of triggers.
 
-There have been a number of works that have developed domain-specific triggers.
+\fix{A number of works have developed domain-specific triggers.}
+%There have been a number of works that have developed domain-specific triggers.
 %
 Work by Bennett et al.~\cite{bennett_siam} developed an application-specific trigger for ignition during combustion simulations. 
 %
-This work was then extended by Salloum et al.~\cite{Salloum_isav} who provided an alternative trigger metric that increased the robustness of the original work. 
+This work was then extended by Salloum et al.~\cite{Salloum_isav}\fix{,} who provided an alternative trigger metric that increased the robustness of the original work. 
 %
 Similarly, work by Zhao et al.~\cite{zhao_jc} and Ullrich et al.~\cite{ullrich_gmd} created domain-specific triggers for tropical cyclone trackers within climate simulations.
 %\fix{should we elaborate more? (drive home the point that these looked a physics specific to the domain, etc?)}
