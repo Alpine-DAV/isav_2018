@@ -19,33 +19,16 @@ The trigger implementation in Ascent is simply another filter in a larger data-f
 % \fix{Ascent triggers make decisions using Mesh-Blueprint data.
 % In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
 
-Ascent's trigger filters process Conduit~\cite{conduit} data that conforms to the Mesh Blueprint~\cite{conduitblueprint}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however it is useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
+Ascent's trigger filters process Conduit~\cite{conduit} data that conforms to the Mesh Blueprint~\cite{conduitblueprint}. 
+%
+This is the same data representation used to publish data to Ascent.  
+%
+Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  
+%
+The triggers have access to all of the mesh data, however it is useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
+%
+Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions for each category.
 
-In Ascent, we define following categories of triggers:
-\begin{itemize}
-\item \textbf{Field}: inspect a specific field on the mesh
-\item \textbf{Topology}: inspect a specific mesh topology
-\item \textbf{Coordinate Set}: inspect a specific coordinate set from the mesh
-\item \textbf{State}: inspect state metadata 
-\end{itemize}
-
-Field triggers have access to all the values of a named field on the mesh.
-%
-A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
-% 
-% need to rework these sentences english wise
-Topology triggers are passed a named mesh topology. An example topology trigger would inspect the mesh, firing when a tangle is detected.
-%
-% need to rework these sentences english wise
-Coordinate Set triggers are passed a named coordinate set. An example coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
-%
-State triggers consume extra metadata associated with the mesh. 
-This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
-%
-Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
-%
-
-\fix{Here is an alternate from Hank:}
 In Ascent, we define following categories of triggers:
 \begin{itemize}
 \item \textbf{Field}: inspect a specific field on the mesh.
@@ -66,24 +49,20 @@ Coordinate Set triggers are passed a named coordinate set. An example coordinate
 State triggers consume extra metadata associated with the mesh. 
 This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
 %
-Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
+Examples of state triggers are fire every $N$ cycles or fire when a performance metric rises above some critical threshold.
 \end{itemize}
-
-
-
-\fix{Does this sentence belong higher up?  I.e., following ''however it is useful to further categorize...''}
-%
-Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions for each category.
-
-%
-%Our trigger infrastructure supports combining types, enabling the creation more complex inspection routines.
-
  
 \subsection{Trigger Decisions}
 
 \fix{From Hank: I think this section needs more couching.  Data reductions are not a necessary thing to do, just a useful thing to do.  Can that point be reflected?  Again, Ascent triggers could be used to replace the sim codes trigger mechanism ... save every N cycles.  No data reduction there.}
 
-Triggers make a binary (yes/no) decision to execute a conditional \fix{why conditional?} set of actions. This process \fix{may involve?} data reduction and and a final decision to fire.
+Triggers make a binary (yes/no) decision to execute a set of actions. 
+%
+When using only state meta-data, a trigger considers a single value, e.g. firing every $N$ cycles.
+%
+When using problem size data such as a field, the data must be reduced to make a final decision to fire.
+%
+%This process may involve data reduction and a final decision to fire.
 
 \subsubsection{Data Reduction}
 %Triggers need to be cheap. They need to be useful. 
@@ -168,8 +147,7 @@ As we continue to develop the infrastructure, the menu of available reduction op
 After the reduction, the trigger evaluates the condition ``gte'' (greater than or equal to) against the ``value'' and the result of the reduction.
 %
 
-\fix{Should this section be called "Developing New Triggers in Ascent''?}
-\subsection{Trigger Development}
+\subsection{Developing New Triggers in Ascent}
 Our goal in Ascent is making trigger development as easy as possible. 
 %
 To that end, we provide a trigger base class for that contains methods verifying parameters, provides easy access to input data (e.g., state, field, coordinate sets, and topology data), and trigger execution.
@@ -179,58 +157,3 @@ The only methods a trigger must implement is the ``trigger'' function that retur
 A trigger implementer only needs to manipulate data contained in Conduit nodes and does not need any knowledge about the internals of Ascent.
 %
 Additionally, we are building a set of data reductions, such as the ones mentioned in Section~\ref{sec:triggerAPI} that are available to trigger developers.
-
-
-\iffalse
-\subsection{Implementation}
-Triggers functionality in Ascent are implemented in two classes.
-%
-The trigger base class has a number of responsibilities including providing access to input data, validating parameters (e.g., actions), calling a derived class's trigger function, and executing the actions if the trigger fires. 
-%
-Derived triggers initialize the base class to register what types of data require for its inspection routine.
-%
-The only function a derived trigger is required to implement is the inspection routine.
-%
-Stateful triggers inherit from both the trigger base type and the Stateful class, which contains the facilities to save and retrieve state information. 
-Listings~\ref{baseclass} and ~\ref{stateclass}
-
-Triggers can be defined in the host code (domain-specific), directly into ascent (domain-agnostic), or exist as a python script on the file system (both). That said, one of the goals of the trigger infrastructure design is to encourage the sharing and re-use of different triggers.
-
-%\begin{figure}
-%\includegraphics[width=6cm]{images/inheritance}
-%\caption{\label{inheritance} An inheritance diagram for the Ascent trigger infrastructure of a custom mesh trigger.}
-%\end{figure}
-
-\begin{lstlisting}[caption={The trigger base class API. Each derived trigger type implements the ``get\_data'' method that retreives the appopriate topology, field, or state data from the input.},captionpos=b, label={baseclass}]
-class Trigger : public Filter
-{
-public:
-  virtual bool trigger() = 0;
-  void exectute()
-  {
-  	bool fire = trigger();
-  	if(fire)
-  	{
-  	  // execute actions
-  	} 
-  }
-protected:
-  const conduit::Node& get_field();
-  const conduit::Node& get_topology();
-  const conduit::Node& get_get_coords();
-  const conduit::Node& get_state();
-  conduit::Node actions;
-};
-
-\end{lstlisting}
-
-\begin{lstlisting}[caption={The trigger state base class that provides methods for setting and retrieving state inforation stored in conduit nodes. State data is stored in a static key-value store accessible to all trigggers },captionpos=b,label={stateclass}]
-class TriggerState
-{
-protected:
- conduit::Node& get_state(std::string key);
- void set_state(std::string key, conduit::Node &state);
-};
-
-\end{lstlisting}
-\fi
