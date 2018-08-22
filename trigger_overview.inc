@@ -93,10 +93,25 @@ these. Multi-dimensional binning can also be used to calculate coarse averages w
 \begin{figure*}[h]
 
 \centering
-\includegraphics[width=.24\textwidth]{images/max_radial}\hfill
-\includegraphics[width=.24\textwidth]{images/kripke_max_backlog}\hfill
-\includegraphics[width=.24\textwidth]{images/clover_plot}
-\includegraphics[width=.24\textwidth]{images/clover_energy}
+\begin{subfigure}{0.22\textwidth}
+\includegraphics[width=\linewidth]{images/max_radial}
+\caption{}
+\end{subfigure}
+\hspace*{\fill}
+\begin{subfigure}{0.22\textwidth}
+\includegraphics[width=\linewidth]{images/kripke_max_backlog}
+\caption{}
+\end{subfigure}
+\hspace*{\fill}
+\begin{subfigure}{0.22\textwidth}
+\includegraphics[width=\linewidth]{images/clover_plot}
+\caption{}
+\end{subfigure}
+\hspace*{\fill}
+\begin{subfigure}{0.22\textwidth}
+\includegraphics[width=\linewidth]{images/clover_energy}
+\caption{}
+\end{subfigure}
 
 \caption{\label{images_figure}From left to right, an image created by the max radial distance trigger at cycle 3120 in Lulesh, an image created by  the simulation state trigger in Kripke, an image created by the threshold trigger in CloverLeaf3D, and a plot of the maximum energy value over time in CloverLeaf3D. }
 \end{figure*}
