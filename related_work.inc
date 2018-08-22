@@ -22,12 +22,12 @@ need to be added to Ascent.
 \subsection{Domain-Agnostic Triggers}
 Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (e.g. simple aggregation, summary statistics, many machine learning techniques). These can be used generically by any simulation applications, so there is value to sharing implementations.
 
-Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant which is a barrier for many 
+Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant, which is likely a barrier for many 
 in situ use cases. 
 %
 Malakar et al.~\cite{malakar} take into account the computational strain of in situ analysis and present a mathematical formula for choosing the optimal process-to-node mapping given the system's constraints.  
 \fix{Hank:why is this reference grouped with the other one?  What do they have in common?  (I don't see it.)}
-\fix{Nicole: It plays off the computational intensity shown in Ling's work and that consideration needs to be taken when applying in situ algorithms. }
+\fix{Nicole: It plays off the computational intensity shown in Ling's work and that consideration needs to be taken when applying in situ algorithms. Hank: but what about the rest of the section?  Are Zhou/Chiang, Myers, etc. not even in consideration?  My comment then expands to the organization of the whole subsection.}
 
 Zhou and Chiang \cite{zhou_cgf} and Myers et al.~\cite{myers} utilized statistical methods to determine time steps of global and local significance, respectively, though the former work is not performed in situ.  
 %

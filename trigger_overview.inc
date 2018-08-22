@@ -3,7 +3,7 @@ Our trigger infrastructure is implemented in Ascent~\cite{Larsen:2017:ASI:314476
 %
 Ascent's flexibility is underpinned by a generic data-flow network.
 %
-Filters in the data-flow network have arbitrary inputs and outputs, and each component of Ascent is implemented as a filter.
+Filters in a data-flow network have arbitrary inputs and outputs, and each component of Ascent is implemented as a filter.
 %
 The Ascent runtime translates data and actions described in the high level API into a graph that is executed by the data-flow network.
 %
@@ -19,9 +19,9 @@ The trigger implementation in Ascent is simply another filter in a larger data-f
 % \fix{Ascent triggers make decisions using Mesh-Blueprint data.
 % In addition to the fact that results from pipelines can be feed in (so we can reuse VAS actions) - the blueprint angle is important high-level point -- we can pull from next section}
 
-Ascent's trigger filters process Conduit\cite{conduit} data that conforms to the Mesh Blueprint\cite{conduitblueprint}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however its useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
-%
-In Ascent we define following categories of triggers:
+Ascent's trigger filters process Conduit~\cite{conduit} data that conforms to the Mesh Blueprint~\cite{conduitblueprint}. This is the same data representation used to publish data to Ascent.  Since outputs from Ascent operations can also be converted to Mesh Blueprint data, this representation allows triggers to operate on Ascent results as well.  The triggers have access to all of the mesh data, however it is useful to further categorize triggers by the parts of simulation mesh required by inspection routines.
+
+In Ascent, we define following categories of triggers:
 \begin{itemize}
 \item \textbf{Field}: inspect a specific field on the mesh
 \item \textbf{Topology}: inspect a specific mesh topology
@@ -34,10 +34,10 @@ Field triggers have access to all the values of a named field on the mesh.
 A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
 % 
 % need to rework these sentences english wise
-Topology triggers are passed a named mesh topology. An example of topology trigger would inspect the mesh, firing when a tangle is detected.
+Topology triggers are passed a named mesh topology. An example topology trigger would inspect the mesh, firing when a tangle is detected.
 %
 % need to rework these sentences english wise
-Coordinate Set triggers are passed a named coordinate set. An example of coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
+Coordinate Set triggers are passed a named coordinate set. An example coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
 %
 State triggers consume extra metadata associated with the mesh. 
 This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
@@ -45,6 +45,34 @@ This includes both basic information like the simulation time and cycle, and cus
 Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
 %
 
+\fix{Here is an alternate from Hank:}
+In Ascent, we define following categories of triggers:
+\begin{itemize}
+\item \textbf{Field}: inspect a specific field on the mesh.
+Field triggers have access to all the values of a named field on the mesh.
+%
+A simple example of a field trigger is one that fires when the maximum value exceeds a user defined threshold.
+% 
+\item \textbf{Topology}: inspect a specific mesh topology.
+Topology triggers are passed a named mesh topology. An example topology trigger would inspect the mesh, firing when a tangle is detected.
+%
+%
+%
+\item \textbf{Coordinate Set}: inspect a specific coordinate set from the mesh.
+% need to rework these sentences english wise
+Coordinate Set triggers are passed a named coordinate set. An example coordinate set trigger would inspect the coordinates, firing when a bounding box grows to a given size.
+\item \textbf{State}: inspect state metadata.
+%
+State triggers consume extra metadata associated with the mesh. 
+This includes both basic information like the simulation time and cycle, and custom data such as simulation performance metrics.  
+%
+Examples of state triggers are fire every $X$ cycles or fire when a performance metric rises above some critical threshold.
+\end{itemize}
+
+
+
+\fix{Does this sentence belong higher up?  I.e., following ''however it is useful to further categorize...''}
+%
 Categorizing triggers is useful for declaring a trigger's purpose (i.e., what data is used to make decisions) and to share common  parameter verification code that checks pre-conditions for each category.
 
 %
@@ -53,7 +81,9 @@ Categorizing triggers is useful for declaring a trigger's purpose (i.e., what da
  
 \subsection{Trigger Decisions}
 
-Triggers make a binary (yes/no) decision to execute a set conditional set of actions. This process involves data reduction and and a final decision to fire.
+\fix{From Hank: I think this section needs more couching.  Data reductions are not a necessary thing to do, just a useful thing to do.  Can that point be reflected?  Again, Ascent triggers could be used to replace the sim codes trigger mechanism ... save every N cycles.  No data reduction there.}
+
+Triggers make a binary (yes/no) decision to execute a conditional \fix{why conditional?} set of actions. This process \fix{may involve?} data reduction and and a final decision to fire.
 
 \subsubsection{Data Reduction}
 %Triggers need to be cheap. They need to be useful. 
@@ -72,7 +102,7 @@ Current methods include retrieving the minimum and maximum values of a field, al
 %
 As we continue to develop Ascent, the set of available methods will increase.
 
-A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. Calculating exact cumulative distributions requires an expensive global sort, so we do not plan to implement these. Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization. \cite{ecf07} For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
+A more sophisticated way to reduce data is to calculate a coarse distribution of a field or a topological feature. This can be calculated inexpensively with a counting or weight-based histogram. Calculating exact cumulative distributions requires an expensive global sort, so we do not plan to implement these. Multi dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization~\cite{ecf07}. For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
 
 \subsubsection{Decision to fire}
 
@@ -131,13 +161,14 @@ trigger["params/reduction"] = "max";
 trigger["params/compare/type"] = "gte";
 trigger["params/compare/value"] = 3.14;
 \end{lstlisting}
-The threshold triggers supports several reductions including ``min'', ``max'', and ``average''.
+The threshold triggers supports several reductions including ``min'', ``max'', and ``average.''
 %
 As we continue to develop the infrastructure, the menu of available reduction operations will increase.
 %
-After the reduction, the trigger evaluates the condition ``gte'', greater than or equal to, against the ``value'' and the result of the reduction.
+After the reduction, the trigger evaluates the condition ``gte'' (greater than or equal to) against the ``value'' and the result of the reduction.
 %
 
+\fix{Should this section be called "Developing New Triggers in Ascent''?}
 \subsection{Trigger Development}
 Our goal in Ascent is making trigger development as easy as possible. 
 %

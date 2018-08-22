@@ -38,9 +38,9 @@ However, if the proportion of the data inspected gets too low,
 then temporal subsamplings can be highly problematic, as key phenomena
 may occur during the uninspected cycles.
 %
-In such cases, the phenomena may leave effects in subsequent
-cycles' data that lead scientists to realize
-that important information was lost because of the temporal subsampling,
+In such cases, the phenomena may affect the data from subsequent
+cycles to an extent that scientists determine
+important information was lost,
 in which case the simulation could be re-run.
 %
 Or, worse, the
