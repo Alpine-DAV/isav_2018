@@ -57,8 +57,6 @@ Examples of state triggers are fire every $N$ cycles or fire when a performance 
  
 \subsection{Trigger Decisions}
 
-\fix{From Hank: I think this section needs more couching.  Data reductions are not a necessary thing to do, just a useful thing to do.  Can that point be reflected?  Again, Ascent triggers could be used to replace the sim codes trigger mechanism ... save every N cycles.  No data reduction there.}
-
 Triggers make a binary (yes/no) decision to execute a set of actions. 
 %
 When using only state \fix{meta-data}, a trigger considers a single value, e.g. firing every $N$ cycles.
@@ -92,7 +90,16 @@ distributions requires an expensive global sort, so we do not plan to implement
 these. Multi\fix{-}dimensional binning can also be used to calculate coarse averages which can be overlaid back onto the mesh topology as input to create more complex derived quantities for summarization~\cite{ecf07}. For distributions, you can further reduce them using another summary metric, such as identifying percentiles or calculating the shannon entropy. \fix{We have a prototype approach to calculate distributions and further summarize them.}
 
 \subsubsection{Decision to fire}
+\begin{figure*}[h]
 
+\centering
+\includegraphics[width=.24\textwidth]{images/max_radial}\hfill
+\includegraphics[width=.24\textwidth]{images/kripke_max_backlog}\hfill
+\includegraphics[width=.24\textwidth]{images/clover_plot}
+\includegraphics[width=.24\textwidth]{images/clover_energy}
+
+\caption{\label{images_figure}From left to right, an image created by the max radial distance trigger at cycle 3120 in Lulesh, an image created by  the simulation state trigger in Kripke, an image created by the threshold trigger in CloverLeaf3D, and a plot of the maximum energy value over time in CloverLeaf3D. }
+\end{figure*}
 The next step in the decision process is to apply a final test to determine if the trigger should fire. 
 
 The Ascent trigger infrastructure allows two trigger variations:
@@ -172,3 +179,5 @@ that returns true or false and the verification \fix{function} of any trigger sp
 A trigger implementer only needs to manipulate data contained in Conduit nodes and does not need any knowledge about the internals of Ascent.
 %
 Additionally, we are building a set of data reductions, such as the ones mentioned in Section~\ref{sec:triggerAPI} that are available to trigger developers.
+
+
