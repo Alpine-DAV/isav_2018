@@ -11,12 +11,12 @@ The maximum value of a field value over time is a quantity of interest in physic
 %
 To track the maximum value, stateless triggers should fire whenever the maximum field value exceeds a predefined value as described in Listing~\ref{triggerAPI}. 
 %
-The rightmost image in Figure~\ref{images_figure} plots the maximum energy value through 1000 cycles of the CloverLeaf3D hydrodynamics proxy-application.
+The image in Figure~\ref{images_figure}d plots the maximum energy value through 1000 cycles of the CloverLeaf3D hydrodynamics proxy-application.
 %
 The maximum value spikes as waves of energy reflect off the boundary and collide in the center of the data set, indicated by a 400\% increase in the maximum value.
 %
 
-We used a stateless threshold trigger to capture the collision by setting the threshold at an energy value of 10.
+We used a stateless threshold trigger to capture the collision by setting the threshold at an energy value of 10, and image captured by this trigger is shown in Figure~\ref{images_figure}c.
 %
 Additionally, we developed a stateful trigger that identified that peak of the energy spike by tracking the maximum over all timesteps.
 %
@@ -73,6 +73,8 @@ Knowing exactly when the shock-wave passes a point is problem dependent since it
 In Ascent, the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the element containing the maximum pressure value.
 %
 When this distance exceeds the threshold, the trigger fires.
+%
+Figure~\ref{images_figure}a shows an image of the first time the trigger fires.
 
 
 \subsection{Simulation State Trigger}
@@ -93,7 +95,7 @@ In order to show an overall view of the maximum backlog for each MPI task, we
 created a performance trigger that fires when the maximum backlog exceeds
 four unanswered requests.
 %
-Using a volume plot shown in figure~\ref{max_backlog}, MPI tasks with higher backlogs appear more opaque than tasks with lower backlogs.
+Using a volume plot shown in Figure~\ref{images_figure}b, MPI tasks with higher backlogs appear more opaque than tasks with lower backlogs.
 %
 Using performance visualization techniques can both highlight performance bottlenecks and provide useful visual debugging information for simulation developers.
 
