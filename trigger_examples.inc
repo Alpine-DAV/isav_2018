@@ -76,9 +76,13 @@ When this distance exceeds the threshold, the trigger fires.
 
 
 \subsection{Simulation State Trigger}
-Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
+%Kripke~\cite{kunen2015kripke} is a physics proxy-application for ARDRA, a code at Lawrence Livermore National Laboratory.
 %
-Kripke is included with Ascent and implements a parallel sweep solver to solve the equations for deterministic neutron transport.
+%Kripke is included with Ascent and implements a parallel sweep solver to solve the equations for deterministic neutron transport.
+
+Kripke~\cite{kunen2015kripke} is a physics proxy-application included with Ascent that implements a parallel sweep used to solve equations for deterministic neutron transport.
+
+
 %
 Each sweep consists of wavefronts for each quadrature direction that propagate through the MPI tasks.
 %
