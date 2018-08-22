@@ -1,7 +1,7 @@
 \section{Introduction}
 
 Computational simulations produce large amounts of data, 
-and manging this data is an important part of 
+and \fix{managing} this data is an important part of 
 these simulations' workflow.
 %
 Common actions available to simulations for processing their data
@@ -16,9 +16,10 @@ the data produced at a given cycle is thrown away as the simulation advances.
 %
 
 A simulation's workflow for visualization, analysis, and/or storage (VAS) can be
-either adaptive or non-adaptive.
+%either adaptive or non-adaptive.
+either \fix{non-adaptive or adaptive}.
 %
-With a non-adaptive workflow, the VAS actions performed happen based on some
+With a non-adaptive workflow, the VAS actions \fix{occur} based on some
 fixed policy that is established before the simulation begins.
 %
 Examples of such fixed policies are to perform VAS every N cycles, to perform
@@ -29,7 +30,7 @@ With these workflows, much of the simulation's data is not inspected for
 VAS purposes.
 %
 For example, if the policy is to save to disk every 100 cycles, then 
-99\% of data is not subject to VAS, i.e., a temporal subsampling.
+99\% of \fix{the} data is not subject to VAS, i.e., a temporal subsampling.
 %
 Temporal subsampling is often acceptable, as simulation data from one
 cycle to the next is often very similar.
@@ -39,14 +40,15 @@ then temporal subsamplings can be highly problematic, as key phenomena
 may occur during the uninspected cycles.
 %
 In such cases, the phenomena may affect the data from subsequent
-cycles to an extent that scientists determine
+cycles to \fix{some degree} %an extent 
+that scientists determine
 important information was lost,
 in which case the simulation could be re-run.
 %
 Or, worse, the
 phenomena may go undiscovered altogether.
 
-Adaptive workflows work differently.
+Adaptive workflows \fix{behave} differently.
 %
 With adaptive workflows, the data produced by a simulation is 
 regularly inspected (often every cycle).
@@ -66,7 +68,7 @@ and the routines can ``trigger'' VAS actions to take place.
 
 With this work, we describe the 
 Ascent in situ library's
-mechnanism for in situ triggers.
+\fix{mechanism} for in situ triggers.
 %
 Our focus with this work is to provide a flexible system that enables
 a variety of trigger approaches.

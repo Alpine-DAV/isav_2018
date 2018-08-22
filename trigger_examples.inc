@@ -2,7 +2,7 @@
 
 
 In this section, we demonstrate a few examples of using Ascent triggers that inspect different combinations of trigger inputs.
-These examples use Ascent's built-in proxy applications, because they provide a simple path to motivate and show common use cases.
+These examples use Ascent's built-in proxy \fix{applications because} they provide a simple path to motivate and show common use cases.
 %
 
 
@@ -53,7 +53,8 @@ Figure~\ref{clover_entropy} plots the entropy value of energy over 200 cycles du
 %\end{figure}
 
 \subsection{Maximum Radial Distance Example}
-There are several cases where expensive processing is only necessary after a simulation model has evolved to a certain regime that cannot easily be identified a priori based on simulation time. 
+There are several cases where expensive processing is only necessary after a
+simulation model has evolved to a certain \fix{state} that cannot easily be identified a priori based on simulation time. 
 
 To demonstrate this type of use case, we developed a trigger for Lulesh~\cite{karlin2013lulesh}, 
 %included with Ascent, is 
@@ -69,7 +70,7 @@ The trigger executes actions after the main shock-wave has reached a specified r
 %
 Knowing exactly when the shock-wave passes a point is problem dependent since it changes both with the input deck and problem size. 
 %
-In Ascent the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the element containing the maximum pressure value.
+In Ascent\fix{,} the maximum radial distance trigger combines field, topology, and coordinate set information to track the distance of the element containing the maximum pressure value.
 %
 When this distance exceeds the threshold, the trigger fires.
 
@@ -84,7 +85,9 @@ Each sweep consists of wavefronts for each quadrature direction that propagate t
 The Ascent integration captures sweep solver performance metrics, including the maximum backlog of incoming requests from different quadrature directions.
 %
 
-In order to show an overall view of the maximum backlog for each MPI task, we created a performance trigger on the maximum back that fires when the maximum backlog exceeds 4 unanswered requests.
+In order to show an overall view of the maximum backlog for each MPI task, we
+created a performance trigger \fix{that fires when} the maximum backlog exceeds
+\fix{four} unanswered requests.
 %
 Using a volume plot shown in figure~\ref{max_backlog}, MPI tasks with higher backlogs appear more opaque than tasks with lower backlogs.
 %
@@ -94,3 +97,4 @@ Using performance visualization techniques can both highlight performance bottle
 %\includegraphics[width=8cm]{images/kripke_max_backlog}
 %\caption{\label{max_backlog} A volume plot of the each MPI task's maximum backlog of unanswered queries from surrounding tasks from a run consisting of 512 MPI %tasks.}
 %\end{figure}
+
