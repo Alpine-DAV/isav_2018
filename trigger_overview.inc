@@ -129,7 +129,7 @@ Our trigger API matches the rest of Ascent and triggers are described using cond
 %
 Listing~\ref{triggerAPI} shows an example of specifying a stateless threshold trigger of the field pressure that fires when the condition is true.
 %
-\begin{lstlisting}[caption={An example of the user-facing trigger API. This triggers executes the actions when the maximum value of the pressure field is greater than or equal to 3.14.},captionpos=b, label={triggerAPI}]
+\begin{lstlisting}[caption={An example of the user-facing trigger API. This trigger executes the actions when the maximum value of the pressure field is greater than or equal to 3.14.},captionpos=b, label={triggerAPI}]
 conduit::Node actions;
 // trigger actions not shown
 conduit::Node trigger;
@@ -140,11 +140,11 @@ trigger["params/reduction"] = "max";
 trigger["params/compare/type"] = "gte";
 trigger["params/compare/value"] = 3.14;
 \end{lstlisting}
-The threshold triggers supports several reductions including ``min'', ``max'', and ``average.''
+The threshold trigger supports several reductions including ``min'', ``max'', and ``average.''
 %
 As we continue to develop the infrastructure, the menu of available reduction operations will increase.
 %
-After the reduction, the trigger evaluates the condition ``gte'' (greater than or equal to) against the ``value'' and the result of the reduction.
+After the reduction, the trigger evaluates the condition ``gte'' (greater-than-or-equal-to) against the ``value'' and the result of the reduction.
 %
 
 \subsection{Developing New Triggers in Ascent}

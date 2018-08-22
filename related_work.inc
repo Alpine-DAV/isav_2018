@@ -26,8 +26,8 @@ Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic t
 in situ use cases. 
 %
 Malakar et al.~\cite{malakar} take into account the computational strain of in situ analysis and present a mathematical formula for choosing the optimal process-to-node mapping given the system's constraints.  
-\fix{Hank:why is this reference grouped with the other one?  What do they have in common?  (I don't see it.)}
-\fix{Nicole: It plays off the computational intensity shown in Ling's work and that consideration needs to be taken when applying in situ algorithms. Hank: but what about the rest of the section?  Are Zhou/Chiang, Myers, etc. not even in consideration?  My comment then expands to the organization of the whole subsection.}
+%\fix{Hank:why is this reference grouped with the other one?  What do they have in common?  (I don't see it.)}
+%\fix{Nicole: It plays off the computational intensity shown in Ling's work and that consideration needs to be taken when applying in situ algorithms. Hank: but what about the rest of the section?  Are Zhou/Chiang, Myers, etc. not even in consideration?  My comment then expands to the organization of the whole subsection.}
 
 Zhou and Chiang \cite{zhou_cgf} and Myers et al.~\cite{myers} utilized statistical methods to determine time steps of global and local significance, respectively, though the former work is not performed in situ.  
 %
@@ -46,6 +46,6 @@ Work by Bennett et al.~\cite{bennett_siam} developed an application-specific tri
 This work was then extended by Salloum et al.~\cite{Salloum_isav} who provided an alternative trigger metric that increased the robustness of the original work. 
 %
 Similarly, work by Zhao et al.~\cite{zhao_jc} and Ullrich et al.~\cite{ullrich_gmd} created domain-specific triggers for tropical cyclone trackers within climate simulations.
-\fix{should we elaborate more? (drive home the point that these looked a physics specific to the domain, etc?)}
+%\fix{should we elaborate more? (drive home the point that these looked a physics specific to the domain, etc?)}
 
 
