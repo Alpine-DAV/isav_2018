@@ -17,7 +17,7 @@ system, although in some cases new inspection routines or VAS actions would
 need to be added to Ascent.
 
 \subsection{Domain-Agnostic Triggers}
-Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (e.g. simple aggregation, summary statistics, many machine learning techniques). These can be used generically by any simulation application, so there is value to sharing implementations.
+Domain-agnostic triggers leverage algorithms that apply broadly to arrays of values (e.g., simple aggregation, summary statistics, many machine learning techniques). These can be used generically by any simulation application, so there is value to sharing implementations.
 
 Work by Ling et al.~\cite{ling_ldav} implements an autonomous, domain-agnostic trigger, but their method involves several machine learning algorithms that are computationally significant, which is likely a barrier for many 
 in situ use cases. 
@@ -34,7 +34,7 @@ And while this research utilizes application-specific parameters for their detec
 
 \subsection{Domain-Specific Triggers}
 Domain-specific triggers leverage algorithms that use special knowledge of either a simulation method or its scientific domain 
-(e.g. triggering on a gradient calculated using specific finite-element method,
+(e.g., triggering on a gradient calculated using specific finite-element method,
 or enstrophy for as a measure of dissipation). These are not as broadly applicable to any simulation, so it is important for an in situ infrastructure to support integrating custom algorithms to support these types of triggers.
 
 A number of works have developed domain-specific triggers.

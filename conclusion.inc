@@ -14,7 +14,7 @@ We also demonstrated how different categories of triggers can be used to identif
 
 For future work, we intend to continue to refine Ascent's in situ trigger system and provide additional reduction and summarization building blocks.
 %
-Additionally, we would like to explore more dynamic trigger workflows where trigger modify the input actions.
+Additionally, we would like to explore more dynamic triggers workflows where trigger modify the input actions.
  
 
 

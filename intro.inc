@@ -54,7 +54,7 @@ With adaptive workflows, the data produced by a simulation is
 regularly inspected (often every cycle).
 %
 The job of these inspections is to determine if interesting phenomena
-has occurred.
+had occurred.
 %
 If so, then the inspection process should prompt VAS actions to occur.
 %

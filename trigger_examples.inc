@@ -98,7 +98,7 @@ In order to show an overall view of the maximum backlog for each MPI task, we
 created a performance trigger that fires when the maximum backlog exceeds
 four unanswered requests.
 %
-Using a volume plot shown in Figure~\ref{images_figure}d, MPI tasks with higher backlogs appear more opaque than tasks with lower backlogs.
+Using a volume plot shown in Figure~\ref{images_figure}d, MPI tasks with higher backlogs appear more opaque than tasks with lower backlogs, similar to the visualizations in~\cite{cwood}.
 %
 Using performance visualization techniques can both highlight performance bottlenecks and provide useful visual debugging information for simulation developers.
 

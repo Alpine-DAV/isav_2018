@@ -58,7 +58,9 @@ Examples of state triggers are fire every $N$ cycles or fire when a performance 
 \subsection{Trigger Decisions}
 
 Triggers make a binary (yes/no) decision to execute a set of actions. 
-In simple cases, a trigger can inspect a single value, e.g. firing every $N$ cycles.
+In simple cases, a trigger can inspect a single value, e.g., firing every $N$ cycles.
+%
+Trigger decisions occur simultaneously on all MPI processes to determine a single collective decision. 
 %
 However, when using problem size data such as a mesh field, the data must usually be
 reduced before making a final decision to fire.
@@ -143,7 +145,7 @@ These actions direct Ascent to create pipelines (i.e., transform data), extracts
 The declaration accepts a trigger name, any input parameters needed for the inspection routine, and a set of 
 actions to execute if the trigger fires. 
 %
-The set of actions is declared using Ascent existing action interface,
+The set of actions is declared using Ascent's existing action interface,
 thus exposing all of Ascent's capabilities including declaration of new triggers.
 
 %
