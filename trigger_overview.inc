@@ -95,28 +95,28 @@ these. Multi-dimensional binning can also be used to calculate coarse averages w
 \begin{figure*}[h]
 
 \centering
-\begin{subfigure}{0.22\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{images/clover_energy}
 \caption{}
 \end{subfigure}
 \hspace*{\fill}
-\begin{subfigure}{0.22\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{images/clover_plot}
 \caption{}
 \end{subfigure}
 \hspace*{\fill}
-\begin{subfigure}{0.22\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{images/max_radial}
 \caption{}
 \end{subfigure}
 \hspace*{\fill}
-\begin{subfigure}{0.22\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{images/kripke_max_backlog}
 \caption{}
 \end{subfigure}
 
-%\caption{\label{images_figure}From left to right, (a) an image created by the max radial distance trigger at cycle 3120 in Lulesh, (b) an image created by  the simulation state trigger in Kripke, (c) an image created by the threshold trigger in CloverLeaf3D, and (d) a plot of the maximum energy value over time in CloverLeaf3D. }
-\caption{\label{images_figure}From left to right, (a) a plot of the maximum energy value over time in CloverLeaf3D, (b) an image created by a threshold trigger in CloverLeaf3D, (c) an image created by a max radial distance trigger at cycle 3120 in Lulesh, and (d) an image created by a simulation state trigger in Kripke. }
+%\caption{\label{images_figure} (a) an image created by the max radial distance trigger at cycle 3120 in Lulesh, (b) an image created by  the simulation state trigger in Kripke, (c) an image created by the threshold trigger in CloverLeaf3D, and (d) a plot of the maximum energy value over time in CloverLeaf3D. }
+\caption{\label{images_figure}(a) a plot of the maximum energy value over time in CloverLeaf3D, (b) an image created by a threshold trigger in CloverLeaf3D, (c) an image created by a max radial distance trigger at cycle 3120 in Lulesh, and (d) an image created by a simulation state trigger in Kripke. }
 \end{figure*}
 After data reduction, triggers apply a final test to determine if the trigger should fire. 
 
